@@ -6,9 +6,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    connect(ui->changeButton, &QPushButton::clicked, this, &MainWindow::changeText);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::changeText()
+{
+    ui->changeButton->setText("changed");
 }

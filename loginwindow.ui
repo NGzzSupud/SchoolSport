@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LoginWindowUi</class>
+ <widget class="QWidget" name="LoginWindowUi">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>196</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QTabWidget" name="tabWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>-3</y>
+     <width>400</width>
+     <height>200</height>
+    </rect>
+   </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <widget class="QWidget" name="tab">
+    <attribute name="title">
+     <string>Normal Login</string>
+    </attribute>
+    <widget class="QPushButton" name="pushButton_normal">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>120</y>
+       <width>100</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Login</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_4">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>30</y>
+       <width>60</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>College :</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit__college">
+     <property name="geometry">
+      <rect>
+       <x>163</x>
+       <y>30</y>
+       <width>140</width>
+       <height>25</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>70</y>
+       <width>85</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Invite Code :</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_code">
+     <property name="geometry">
+      <rect>
+       <x>188</x>
+       <y>70</y>
+       <width>115</width>
+       <height>25</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_2">
+    <attribute name="title">
+     <string>Manager Login</string>
+    </attribute>
+    <widget class="QPushButton" name="pushButton_manager">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>120</y>
+       <width>100</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Login</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>30</y>
+       <width>65</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Account :</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_accout">
+     <property name="geometry">
+      <rect>
+       <x>167</x>
+       <y>30</y>
+       <width>135</width>
+       <height>25</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_password">
+     <property name="geometry">
+      <rect>
+       <x>177</x>
+       <y>70</y>
+       <width>125</width>
+       <height>25</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>70</y>
+       <width>75</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Password :</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

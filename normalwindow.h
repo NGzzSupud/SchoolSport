@@ -2,6 +2,7 @@
 #define NORMALWINDOW_H
 
 #include <QWidget>
+#include <QTableWidget>
 
 namespace Ui {
 class NormalWindowUi;
@@ -16,7 +17,8 @@ public:
 
 signals:
 
-public slots:
+private slots:
+    void clickButton();
 
 private:
     Ui::NormalWindowUi *ui;

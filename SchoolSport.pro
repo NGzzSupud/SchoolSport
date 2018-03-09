@@ -27,14 +27,17 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     loginwindow.cpp \
-    adminwindow.cpp
+    adminwindow.cpp \
+    normalwindow.cpp
 
 HEADERS += \
         mainwindow.h \
     loginwindow.h \
-    adminwindow.h
+    adminwindow.h \
+    normalwindow.h
 
 FORMS += \
         mainwindow.ui \
     loginwindow.ui \
-    adminwindow.ui
+    adminwindow.ui \
+    normalwindow.ui

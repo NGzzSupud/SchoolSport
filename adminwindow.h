@@ -2,6 +2,7 @@
 #define ADMINWINDOW_H
 
 #include <QWidget>
+#include <QPushButton>
 
 namespace Ui {
 class AdminWindowUi;
@@ -19,6 +20,10 @@ public slots:
 
 private:
     Ui::AdminWindowUi *ui;
+    void display(int mode);
+
+    QPushButton * basPotBtn;               //draw pointer
+    QPushButton * basLineBtn;              //draw line
 };
 
 #endif // ADMINWINDOW_H

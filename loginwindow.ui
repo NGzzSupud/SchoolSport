@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -48,20 +48,20 @@
        <x>100</x>
        <y>30</y>
        <width>60</width>
-       <height>25</height>
+       <height>20</height>
       </rect>
      </property>
      <property name="text">
       <string>College :</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit__college">
+    <widget class="QLineEdit" name="lineEdit_college">
      <property name="geometry">
       <rect>
        <x>163</x>
        <y>30</y>
        <width>140</width>
-       <height>25</height>
+       <height>20</height>
       </rect>
      </property>
     </widget>
@@ -71,7 +71,7 @@
        <x>100</x>
        <y>70</y>
        <width>85</width>
-       <height>25</height>
+       <height>20</height>
       </rect>
      </property>
      <property name="text">
@@ -84,7 +84,7 @@
        <x>188</x>
        <y>70</y>
        <width>115</width>
-       <height>25</height>
+       <height>20</height>
       </rect>
      </property>
     </widget>
@@ -112,20 +112,20 @@
        <x>100</x>
        <y>30</y>
        <width>65</width>
-       <height>25</height>
+       <height>20</height>
       </rect>
      </property>
      <property name="text">
       <string>Account :</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_accout">
+    <widget class="QLineEdit" name="lineEdit_account">
      <property name="geometry">
       <rect>
        <x>167</x>
        <y>30</y>
        <width>135</width>
-       <height>25</height>
+       <height>20</height>
       </rect>
      </property>
     </widget>
@@ -135,7 +135,7 @@
        <x>177</x>
        <y>70</y>
        <width>125</width>
-       <height>25</height>
+       <height>20</height>
       </rect>
      </property>
     </widget>
@@ -145,7 +145,7 @@
        <x>100</x>
        <y>70</y>
        <width>75</width>
-       <height>25</height>
+       <height>20</height>
       </rect>
      </property>
      <property name="text">

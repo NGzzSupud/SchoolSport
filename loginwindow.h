@@ -2,6 +2,8 @@
 #define LOGINWINDOW_H
 
 #include <QWidget>
+#include "adminwindow.h"
+#include "normalwindow.h"
 
 namespace Ui {
 class LoginWindowUi;
@@ -22,6 +24,9 @@ private slots:
 
 private:
     Ui::LoginWindowUi *ui;
+    AdminWindow adminWin;
+    NormalWindow normalWin;
+    int Current;
 };
 
 #endif // LOGINWINDOW_H

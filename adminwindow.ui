@@ -2,17 +2,31 @@
 <ui version="4.0">
  <class>AdminWindowUi</class>
  <widget class="QWidget" name="AdminWindowUi">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>600</height>
+    <height>596</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Admin</string>
   </property>
+  <widget class="QWidget" name="gridLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>90</y>
+     <width>501</width>
+     <height>371</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout"/>
+  </widget>
  </widget>
  <resources/>
  <connections/>

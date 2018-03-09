@@ -9,13 +9,85 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>555</width>
-    <height>555</height>
+    <width>400</width>
+    <height>204</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Normal</string>
+   <string>报名</string>
   </property>
+  <widget class="QComboBox" name="comboBox_sports">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>25</y>
+     <width>100</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>20</y>
+     <width>91</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>运动项目选择：</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_name">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>25</y>
+     <width>113</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>30</y>
+     <width>54</width>
+     <height>12</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>  名字：</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_submit">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>110</y>
+     <width>75</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>报名</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_timer">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>110</y>
+     <width>75</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>赛程</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

@@ -16,8 +16,6 @@ public:
     explicit LoginWindow(QWidget *parent = nullptr);
     ~LoginWindow();
 
-signals:
-
 private slots:
     void normalLogin();
     void managerLogin();

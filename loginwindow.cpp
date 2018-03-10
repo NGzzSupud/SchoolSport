@@ -13,6 +13,7 @@ LoginWindow::LoginWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowFlags(this->windowFlags()&~Qt::WindowMaximizeButtonHint);
+    this->setFixedSize(this->width(), this->height());
     ui->lineEdit_password->setEchoMode(QLineEdit::Password);
 
     //Readin config file
@@ -28,7 +29,6 @@ LoginWindow::LoginWindow(QWidget *parent) :
     //bind action and function
     connect(ui->pushButton_normal, &QPushButton::clicked, this, &LoginWindow::normalLogin);
     connect(ui->pushButton_manager, &QPushButton::clicked, this, &LoginWindow::managerLogin);
-
 }
 
 LoginWindow::~LoginWindow()
@@ -41,20 +41,27 @@ void LoginWindow::normalLogin()
     QString college = ui->lineEdit_college->text();
     QString code = ui->lineEdit_code->text();
 
-    //Authenticate inviteCode
-    if(Current == 1){
-        QMessageBox::about(this, tr("Tips"), tr("No game now."));
-    }else {
-        QString configFilePath = "config.ini";
-        QSettings settings(configFilePath,QSettings::IniFormat);
+    if(college != "" && code != ""){
 
-        QString auth = settings.value("InviteCode/" + college).toString();
-
-        if(!code.compare(auth)){
-            //Login successfully
-            normalWin.show();
-            this->close();
+        //Authenticate inviteCode
+        if(Current == 1){
+            QMessageBox::about(this, tr("Tips"), tr("No game now."));
+        }else {
+            QString configFilePath = "config.ini";
+            QSettings settings(configFilePath,QSettings::IniFormat);
+            QString auth = settings.value("InviteCode/" + college).toString();
+            if(!code.compare(auth)){
+                //Login successfully
+                normalWin.setCollege(college);
+                normalWin.show();
+                this->close();
+            }else{
+                //Login failed
+                QMessageBox::about(this, tr("Tips"), tr("Login failed."));
+            }
         }
+    }else{
+        QMessageBox::about(this, tr("Tips"), tr("Input should not be empty."));
     }
 }
 
@@ -63,10 +70,24 @@ void LoginWindow::managerLogin()
     QString account = ui->lineEdit_account->text();
     QString password = ui->lineEdit_password->text();
 
-    //Authenticate account and password
-    if(false){
-        //Login successfully
-        adminWin.show();
-        this->close();
+    if(account != "" && password != ""){
+
+        //Authenticate account and password
+        QString configFilePath = "config.ini";
+        QSettings settings(configFilePath,QSettings::IniFormat);
+        QString auth = settings.value("Manager/" + account).toString();
+        qDebug()<<auth;
+
+        if(!password.compare(auth)){
+            //Login successfully
+            adminWin.show();
+            this->close();
+        }else{
+            //Login failed
+            QMessageBox::about(this, tr("Tips"), tr("Login failed. Please check your account and password."));
+        }
+    }else{
+        QMessageBox::about(this, tr("Tips"), tr("Input should not be empty."));
     }
+
 }

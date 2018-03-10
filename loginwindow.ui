@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -47,20 +47,20 @@
       <rect>
        <x>100</x>
        <y>30</y>
-       <width>60</width>
+       <width>65</width>
        <height>20</height>
       </rect>
      </property>
      <property name="text">
-      <string>College :</string>
+      <string>College:</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="lineEdit_college">
      <property name="geometry">
       <rect>
-       <x>163</x>
+       <x>165</x>
        <y>30</y>
-       <width>140</width>
+       <width>135</width>
        <height>20</height>
       </rect>
      </property>
@@ -70,20 +70,20 @@
       <rect>
        <x>100</x>
        <y>70</y>
-       <width>85</width>
+       <width>100</width>
        <height>20</height>
       </rect>
      </property>
      <property name="text">
-      <string>Invite Code :</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invite Code:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="lineEdit_code">
      <property name="geometry">
       <rect>
-       <x>188</x>
+       <x>200</x>
        <y>70</y>
-       <width>115</width>
+       <width>101</width>
        <height>20</height>
       </rect>
      </property>
@@ -116,13 +116,13 @@
       </rect>
      </property>
      <property name="text">
-      <string>Account :</string>
+      <string>Account:</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="lineEdit_account">
      <property name="geometry">
       <rect>
-       <x>167</x>
+       <x>165</x>
        <y>30</y>
        <width>135</width>
        <height>20</height>
@@ -132,11 +132,14 @@
     <widget class="QLineEdit" name="lineEdit_password">
      <property name="geometry">
       <rect>
-       <x>177</x>
+       <x>175</x>
        <y>70</y>
        <width>125</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="echoMode">
+      <enum>QLineEdit::Normal</enum>
      </property>
     </widget>
     <widget class="QLabel" name="label_3">
@@ -149,7 +152,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Password :</string>
+      <string>Password:</string>
      </property>
     </widget>
    </widget>

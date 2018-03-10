@@ -4,3 +4,10 @@ DataProcess::DataProcess()
 {
 
 }
+
+DataProcess::·DataProcess()
+{
+
+}
+
+

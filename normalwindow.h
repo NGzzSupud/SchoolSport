@@ -18,7 +18,8 @@ public:
 signals:
 
 private slots:
-    void clickButton();
+    void displaySports();
+    void submit();
 
 private:
     Ui::NormalWindowUi *ui;

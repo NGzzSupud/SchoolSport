@@ -14,6 +14,7 @@ NormalWindow::NormalWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowFlags(this->windowFlags()&~Qt::WindowMaximizeButtonHint);
+    this->setFixedSize(this->width(), this->height());
     this->move ((QApplication::desktop()->width() - this->width())/2,(QApplication::desktop()->height() - this->height())/2);
 
     QFile file("Game.txt");
@@ -36,6 +37,7 @@ NormalWindow::NormalWindow(QWidget *parent) :
 
     connect(ui->pushButton_timer,&QPushButton::clicked,this,&NormalWindow::displaySports);
     connect(ui->pushButton_submit,&QPushButton::clicked,this,&NormalWindow::submit);
+
 }
 
 NormalWindow::~NormalWindow()
@@ -43,12 +45,24 @@ NormalWindow::~NormalWindow()
     delete ui;
 }
 
-void NormalWindow::displaySports(){
+void NormalWindow::setCollege(QString college)
+{
+    this->College = college;
+}
 
+QString NormalWindow::getCollege()
+{
+    return this->College;
+}
+
+
+void NormalWindow::displaySports()
+{
     static QDialog *mainWindow = new QDialog;
 
     static QGridLayout *gridLayout = new QGridLayout;
 
+    qDebug()<<getCollege();
     //Read in game file.
 
     QFile file("Game.txt");
@@ -61,7 +75,7 @@ void NormalWindow::displaySports(){
     QStringList colLabels;
     colLabels << "Game" << "Time" << "Place";
     table->setHorizontalHeaderLabels(colLabels);
-
+    table->setEditTriggers(QAbstractItemView::NoEditTriggers);
     //Add rows and fill in data
     int rows = 0;
     while(!file.atEnd()){
@@ -98,10 +112,12 @@ void NormalWindow::displaySports(){
 
     mainWindow->setLayout(gridLayout);
 
-    mainWindow->resize(400, 45 + rows * 22);
-    mainWindow->setGeometry(this->geometry().x() - 400, (QApplication::desktop()->height() - mainWindow->height())/2, 400, 45 + rows * 22);
+    mainWindow->resize(450, 80 + rows * 22);
+    mainWindow->setWindowTitle(getCollege() + " Games Timer");
+    mainWindow->setGeometry(this->geometry().x() - 450, (QApplication::desktop()->height() - mainWindow->height())/2, 450, 80 + rows * 22);
     mainWindow->setWindowFlags(mainWindow->windowFlags()&~Qt::WindowMaximizeButtonHint);
-    mainWindow->setWindowTitle(QWidget::tr("Game timer"));
+    mainWindow->setWindowFlags(Qt::WindowCloseButtonHint | Qt::MSWindowsFixedSizeDialogHint);
+    mainWindow->setFixedSize(mainWindow->width(), mainWindow->height());
     mainWindow->show();
 
 }

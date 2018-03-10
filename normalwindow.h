@@ -14,6 +14,8 @@ class NormalWindow : public QWidget
 public:
     explicit NormalWindow(QWidget *parent = nullptr);
     ~NormalWindow();
+    void setCollege(QString college);
+    QString getCollege();
 
 signals:
 
@@ -23,6 +25,7 @@ private slots:
 
 private:
     Ui::NormalWindowUi *ui;
+    QString College;
 };
 
 #endif // NORMALWINDOW_H

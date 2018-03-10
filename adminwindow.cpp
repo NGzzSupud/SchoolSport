@@ -12,6 +12,7 @@ AdminWindow::AdminWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     this->move ((QApplication::desktop()->width() - this->width())/2,(QApplication::desktop()->height() - this->height())/2);
+    this->setFixedSize(this->width(), this->height());
 
     //Readin config file
     QString configFilePath = "config.ini";
@@ -35,10 +36,9 @@ AdminWindow::~AdminWindow()
 void AdminWindow::display(int mode)
 {
 
-    basPotBtn = new QPushButton();
-    basPotBtn->setText("a2s1d32a");
-    basPotBtn->setGeometry(0, 21, 20, 50);
-    /*switch (mode) {
+
+    /*
+    switch (mode) {
     case value:-1;
 
         break;
@@ -59,5 +59,6 @@ void AdminWindow::display(int mode)
         break;
     default:
         break;
-    }*/
+    }
+    */
 }

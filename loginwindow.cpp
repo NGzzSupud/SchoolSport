@@ -76,7 +76,6 @@ void LoginWindow::managerLogin()
         QString configFilePath = "config.ini";
         QSettings settings(configFilePath,QSettings::IniFormat);
         QString auth = settings.value("Manager/" + account).toString();
-        qDebug()<<auth;
 
         if(!password.compare(auth)){
             //Login successfully

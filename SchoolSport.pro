@@ -28,13 +28,15 @@ SOURCES += \
         mainwindow.cpp \
     loginwindow.cpp \
     adminwindow.cpp \
-    normalwindow.cpp
+    normalwindow.cpp \
+    dataprocess.cpp
 
 HEADERS += \
         mainwindow.h \
     loginwindow.h \
     adminwindow.h \
-    normalwindow.h
+    normalwindow.h \
+    dataprocess.h
 
 FORMS += \
         mainwindow.ui \

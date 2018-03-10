@@ -3,6 +3,9 @@
 
 #include <QWidget>
 #include <QTableWidget>
+#include <QDate>
+
+#include "dataprocess.h"
 
 namespace Ui {
 class NormalWindowUi;
@@ -25,6 +28,7 @@ private slots:
 
 private:
     Ui::NormalWindowUi *ui;
+    QVector<Game> games;
     QString College;
 };
 

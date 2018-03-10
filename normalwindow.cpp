@@ -17,19 +17,32 @@ NormalWindow::NormalWindow(QWidget *parent) :
     this->setFixedSize(this->width(), this->height());
     this->move ((QApplication::desktop()->width() - this->width())/2,(QApplication::desktop()->height() - this->height())/2);
 
+    Game game;
+    int rows = 0;
+
     QFile file("Game.txt");
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
            qDebug()<<"Can't open the file!"<<endl;
     }
 
-    QString content;
     //Add items into combobox
     while(!file.atEnd()){
         QByteArray line = file.readLine();
         QString str(line);
-        content = str.section("|", 0, 0);
+        //qDebug()<<str;
+        if(str != "\n"){
+            rows ++;
+            bool ok;
+            game.id = rows;
+            game.name = str.section("|", 0, 0);
+            game.date = QDate::fromString(str.section("|", 1, 1), "yyyy-MM-dd");
+            game.time = QTime::fromString(str.section("|", 2, 2), "mm:ss");
+            game.place = str.section("|", 3, 3);
+            game.number = str.section("|", 4, 4).toInt(&ok, 10);
 
-        ui->comboBox_sports->addItem(content);
+            games.push_back(game);
+            ui->comboBox_sports->addItem(game.name);
+        }
     }
 
     //Close file
@@ -62,7 +75,6 @@ void NormalWindow::displaySports()
 
     static QGridLayout *gridLayout = new QGridLayout;
 
-    qDebug()<<getCollege();
     //Read in game file.
 
     QFile file("Game.txt");
@@ -71,39 +83,45 @@ void NormalWindow::displaySports()
     }
 
     //create a table
-    QTableWidget *table = new QTableWidget(0,3);
+    QTableWidget *table = new QTableWidget(0,5);
     QStringList colLabels;
-    colLabels << "Game" << "Time" << "Place";
+    colLabels << "Game" << "Date" << "Time" << "Place" << "Number";
     table->setHorizontalHeaderLabels(colLabels);
     table->setEditTriggers(QAbstractItemView::NoEditTriggers);
     //Add rows and fill in data
-    int rows = 0;
-    while(!file.atEnd()){
-        QByteArray line = file.readLine();
-        QString str(line);
-        rows ++;
+    for(int i = 0; i < games.size(); i ++){
+        //qDebug()<<games[i].id<<games[i].name<<games[i].date<<games[i].time<<games[i].place<<games[i].number;
 
-        QString content;
-        table->setRowCount(rows);
-        QTableWidgetItem *newRows = new QTableWidgetItem(QString("%1").arg(rows));
-        table->setVerticalHeaderItem(rows - 1, newRows);
-
-        QTableWidgetItem *item;
-
-        for(int i = 0; i < 3; i ++){
-            item = new QTableWidgetItem;
-            content = str.section("|", i, i);
-            item->setText(content);
-            table->setItem(rows - 1, i, item);
-        }
-
+        table->setRowCount(i + 1);
+        QTableWidgetItem *item1;
+        QTableWidgetItem *item2;
+        QTableWidgetItem *item3;
+        QTableWidgetItem *item4;
+        QTableWidgetItem *item5;
+        item1 = new QTableWidgetItem;
+        item2 = new QTableWidgetItem;
+        item3 = new QTableWidgetItem;
+        item4 = new QTableWidgetItem;
+        item5 = new QTableWidgetItem;
+        item1->setText(games[i].name);
+        item1->setTextAlignment(Qt::AlignCenter);
+        table->setItem(i, 0, item1);
+        item2->setText(games[i].date.toString("yyyy-MM-dd"));
+        item2->setTextAlignment(Qt::AlignCenter);
+        table->setItem(i, 1, item2);
+        item3->setText(games[i].time.toString("mm:ss"));
+        item3->setTextAlignment(Qt::AlignCenter);
+        table->setItem(i, 2, item3);
+        item4->setText(games[i].place);
+        item4->setTextAlignment(Qt::AlignCenter);
+        table->setItem(i, 3, item4);
+        item5->setText(QString::number(games[i].number));
+        item5->setTextAlignment(Qt::AlignCenter);
+        table->setItem(i, 4, item5);
     }
 
-    //Close file
-    file.close();
-
     //Set the height of each row
-    for(int i = 0; i < rows; i++)
+    for(int i = 0; i < games.size(); i++)
         table->setRowHeight(i, 22);
     table->horizontalHeader()->setStretchLastSection(true);
 
@@ -112,9 +130,9 @@ void NormalWindow::displaySports()
 
     mainWindow->setLayout(gridLayout);
 
-    mainWindow->resize(450, 80 + rows * 22);
+    mainWindow->resize(680, 80 + games.size() * 22);
     mainWindow->setWindowTitle(getCollege() + " Games Timer");
-    mainWindow->setGeometry(this->geometry().x() - 450, (QApplication::desktop()->height() - mainWindow->height())/2, 450, 80 + rows * 22);
+    mainWindow->setGeometry(this->geometry().x() - 680, (QApplication::desktop()->height() - mainWindow->height())/2, 680, 80 + games.size() * 22);
     mainWindow->setWindowFlags(mainWindow->windowFlags()&~Qt::WindowMaximizeButtonHint);
     mainWindow->setWindowFlags(Qt::WindowCloseButtonHint | Qt::MSWindowsFixedSizeDialogHint);
     mainWindow->setFixedSize(mainWindow->width(), mainWindow->height());

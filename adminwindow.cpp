@@ -1,10 +1,11 @@
 #include "adminwindow.h"
 #include "ui_adminwindow.h"
-
 #include <QDebug>
 #include <QMessageBox>
 #include <QSettings>
 #include <QDesktopWidget>
+#include "dataprocess.h"
+extern DataProcess database;
 
 AdminWindow::AdminWindow(QWidget *parent) :
     QWidget(parent),
@@ -23,7 +24,7 @@ AdminWindow::AdminWindow(QWidget *parent) :
     if(Current < -1 || Current == 0 || Current > 5){
         settings.setValue("Game/Current", "-1");
     }
-
+    //qDebug()<<database.games.size();
     display(Current);
 }
 

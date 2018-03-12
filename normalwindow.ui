@@ -29,7 +29,7 @@
     <item>
      <widget class="QPushButton" name="pushButton_timer">
       <property name="text">
-       <string>查看赛程</string>
+       <string>Game Timer</string>
       </property>
      </widget>
     </item>
@@ -49,7 +49,7 @@
     <item>
      <widget class="QPushButton" name="pushButton_submit">
       <property name="text">
-       <string>报名</string>
+       <string>Submit</string>
       </property>
      </widget>
     </item>
@@ -75,7 +75,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>运动项目选择:</string>
+    <string>Select Game:</string>
    </property>
   </widget>
  </widget>

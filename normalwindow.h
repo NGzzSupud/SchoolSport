@@ -3,8 +3,6 @@
 
 #include <QWidget>
 #include <QTableWidget>
-#include <QDate>
-
 #include "dataprocess.h"
 
 namespace Ui {

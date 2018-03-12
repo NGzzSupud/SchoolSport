@@ -2,6 +2,8 @@
 #define DATAPROCESS_H
 
 #include <QString>
+#include <QDate>
+
 
 struct Game
 {
@@ -13,10 +15,17 @@ struct Game
     int number;
 };
 
+struct College
+{
+    int id;
+    QString name;
+    QString code;
+};
+
 struct Student
 {
     int id;
-    QString college;
+    int college_id;
     QString name;
 };
 
@@ -30,6 +39,7 @@ struct Signup
 struct Result
 {
     int id;
+    int game_id;
     int student_id;
     QString result;
 };
@@ -37,13 +47,19 @@ struct Result
 class DataProcess
 {
 public:
-    DataProcess();
     QVector<Game> games;
     QVector<Student> students;
     QVector<Signup> signups;
-    Game getGamebyId(int game_id);
-    Student getStudentbyId(int student_id);
+    QVector<Result> results;
+    QVector<College> colleges;
+
+    static Game getGameById(int id);
+    static Student getStudentById(int id);
+    static College getCollegeById(int id);
+
+private:
 
 };
+
 
 #endif // DATAPROCESS_H

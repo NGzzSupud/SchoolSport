@@ -5,7 +5,6 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QSettings>
-extern DataProcess database;
 
 LoginWindow::LoginWindow(QWidget *parent) :
     QWidget(parent),
@@ -22,11 +21,11 @@ LoginWindow::LoginWindow(QWidget *parent) :
 
     Current = settings.value("Game/Current").toInt();
 
-    if(Current < -1 || Current == 0 || Current > 5){
+    if(Current < -1 || Current == 0 || Current > 3){
         settings.setValue("Game/Current", "-1");
     }
 
-    //Bind action and function
+    //bind action and function
     connect(ui->pushButton_normal, &QPushButton::clicked, this, &LoginWindow::normalLogin);
     connect(ui->pushButton_manager, &QPushButton::clicked, this, &LoginWindow::managerLogin);
 }
@@ -42,31 +41,22 @@ void LoginWindow::normalLogin()
     QString code = ui->lineEdit_code->text();
 
     if(college != "" && code != ""){
-        int position;
-        //Authenticate college and inviteCode
+
+        //Authenticate inviteCode
         if(Current == 1){
             QMessageBox::about(this, tr("Tips"), tr("No game now."));
         }else {
-            bool flag = false;
-            for(int i=0; i<database.colleges.size(); i ++){
-                if(!college.compare(database.colleges[i].name)){
-                    flag = true;
-                    position = i;
-                }
-            }
-            if(flag){
-                if(!code.compare(database.colleges[position].code)){
-                    //Login successfully
-                    normalWin.setCollege(college);
-                    normalWin.show();
-                    this->close();
-                }else{
-                    //Wrong code
-                    QMessageBox::about(this, tr("Tips"), tr("The code is wrong."));
-                }
-            }else {
-                //Wrong college
-                QMessageBox::about(this, tr("Tips"), tr("There is no this college."));
+            QString configFilePath = "config.ini";
+            QSettings settings(configFilePath,QSettings::IniFormat);
+            QString auth = settings.value("InviteCode/" + college).toString();
+            if(!code.compare(auth)){
+                //Login successfully
+                normalWin.setCollege(college);
+                normalWin.show();
+                this->close();
+            }else{
+                //Login failed
+                QMessageBox::about(this, tr("Tips"), tr("Login failed."));
             }
         }
     }else{
@@ -88,7 +78,7 @@ void LoginWindow::managerLogin()
 
         if(!password.compare(auth)){
             //Login successfully
-            adminWin.show();
+            jumpWindow(Current);
             this->close();
         }else{
             //Login failed
@@ -98,4 +88,20 @@ void LoginWindow::managerLogin()
         QMessageBox::about(this, tr("Tips"), tr("Input should not be empty."));
     }
 
+}
+
+void LoginWindow::jumpWindow(int flag){
+    switch (flag) {
+    case -1:
+        beginWin.show();
+        break;
+    case 1:
+        adminWin_1.show();
+        break;
+    /*case 2:
+        adminWin_2.show();
+        break;*/
+    default:
+        break;
+    }
 }

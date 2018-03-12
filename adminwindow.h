@@ -20,10 +20,7 @@ public slots:
 
 private:
     Ui::AdminWindowUi *ui;
-    void display(int mode);
-
-    QPushButton * basPotBtn;               //draw pointer
-    QPushButton * basLineBtn;              //draw line
+    void changeCurrent();
 };
 
 #endif // ADMINWINDOW_H

@@ -4,6 +4,8 @@
 #include <QWidget>
 #include "adminwindow.h"
 #include "normalwindow.h"
+#include "mainwindow.h"
+#include "adminwindow.h"
 
 namespace Ui {
 class LoginWindowUi;
@@ -16,14 +18,18 @@ public:
     explicit LoginWindow(QWidget *parent = nullptr);
     ~LoginWindow();
 
+
 private slots:
     void normalLogin();
     void managerLogin();
+    void jumpWindow(int flag);
 
 private:
     Ui::LoginWindowUi *ui;
-    AdminWindow adminWin;
     NormalWindow normalWin;
+    MainWindow beginWin;
+    AdminWindow adminWin_1;
+    //SignupWindow adminWin_2;
     int Current;
 };
 

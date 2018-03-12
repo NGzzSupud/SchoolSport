@@ -5,6 +5,8 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QSettings>
+#include "dataprocess.h"
+extern DataProcess database;
 
 LoginWindow::LoginWindow(QWidget *parent) :
     QWidget(parent),
@@ -41,22 +43,31 @@ void LoginWindow::normalLogin()
     QString code = ui->lineEdit_code->text();
 
     if(college != "" && code != ""){
-
-        //Authenticate inviteCode
+        int position;
+        //Authenticate college and inviteCode
         if(Current == 1){
             QMessageBox::about(this, tr("Tips"), tr("No game now."));
         }else {
-            QString configFilePath = "config.ini";
-            QSettings settings(configFilePath,QSettings::IniFormat);
-            QString auth = settings.value("InviteCode/" + college).toString();
-            if(!code.compare(auth)){
-                //Login successfully
-                normalWin.setCollege(college);
-                normalWin.show();
-                this->close();
-            }else{
-                //Login failed
-                QMessageBox::about(this, tr("Tips"), tr("Login failed."));
+            bool flag = false;
+            for(int i=0; i<database.colleges.size(); i ++){
+                if(!college.compare(database.colleges[i].name)){
+                    flag = true;
+                    position = i;
+                }
+            }
+            if(flag){
+                if(!code.compare(database.colleges[position].code)){
+                    //Login successfully
+                    normalWin.setCollege(college);
+                    normalWin.show();
+                    this->close();
+                }else{
+                    //Wrong code
+                    QMessageBox::about(this, tr("Tips"), tr("The code is wrong."));
+                }
+            }else {
+                //Wrong college
+                QMessageBox::about(this, tr("Tips"), tr("There is no this college."));
             }
         }
     }else{

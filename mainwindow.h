@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "adminwindow.h"
 
 namespace Ui {
 class MainWindow;
@@ -16,10 +17,10 @@ public:
     ~MainWindow();
 
 private slots:
-    void changeText();
-
+    void changeCurrent();
 private:
     Ui::MainWindow *ui;
+    AdminWindow adminWin_1;
 };
 
 #endif // MAINWINDOW_H

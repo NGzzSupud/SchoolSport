@@ -6,7 +6,6 @@
 #include <QMessageBox>
 #include <QSettings>
 
-
 LoginWindow::LoginWindow(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::LoginWindowUi)
@@ -22,7 +21,7 @@ LoginWindow::LoginWindow(QWidget *parent) :
 
     Current = settings.value("Game/Current").toInt();
 
-    if(Current < -1 || Current == 0 || Current > 5){
+    if(Current < -1 || Current == 0 || Current > 3){
         settings.setValue("Game/Current", "-1");
     }
 
@@ -79,7 +78,7 @@ void LoginWindow::managerLogin()
 
         if(!password.compare(auth)){
             //Login successfully
-            adminWin.show();
+            jumpWindow(Current);
             this->close();
         }else{
             //Login failed
@@ -89,4 +88,20 @@ void LoginWindow::managerLogin()
         QMessageBox::about(this, tr("Tips"), tr("Input should not be empty."));
     }
 
+}
+
+void LoginWindow::jumpWindow(int flag){
+    switch (flag) {
+    case -1:
+        beginWin.show();
+        break;
+    case 1:
+        adminWin_1.show();
+        break;
+    /*case 2:
+        adminWin_2.show();
+        break;*/
+    default:
+        break;
+    }
 }

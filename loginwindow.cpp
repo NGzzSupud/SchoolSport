@@ -26,7 +26,6 @@ LoginWindow::LoginWindow(QWidget *parent) :
     if(Current < -1 || Current == 0 || Current > 3){
         settings.setValue("Game/Current", "-1");
     }
-
     //bind action and function
     connect(ui->pushButton_normal, &QPushButton::clicked, this, &LoginWindow::normalLogin);
     connect(ui->pushButton_manager, &QPushButton::clicked, this, &LoginWindow::managerLogin);
@@ -45,7 +44,7 @@ void LoginWindow::normalLogin()
     if(college != "" && code != ""){
         int position;
         //Authenticate college and inviteCode
-        if(Current == 1){
+        if(Current == -1){
             QMessageBox::about(this, tr("Tips"), tr("No game now."));
         }else {
             bool flag = false;
@@ -58,7 +57,6 @@ void LoginWindow::normalLogin()
             if(flag){
                 if(!code.compare(database.colleges[position].code)){
                     //Login successfully
-                    normalWin.setCollege(college);
                     normalWin.show();
                     this->close();
                 }else{

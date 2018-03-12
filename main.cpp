@@ -9,6 +9,88 @@
 #include "dataprocess.h"
 DataProcess database;
 
+void DataProcess::saveCollege()
+{
+    QFile fileCollege("College.txt");
+    if(!fileCollege.open(QIODevice::ReadWrite | QIODevice::Text | QIODevice::Truncate)) {
+        qDebug()<<"Can't open the college file!";
+    }else {
+        for(int i=0; i < database.colleges.size(); i ++){
+            QString str = database.colleges[i].name + "|" + database.colleges[i].code + "|";
+            QTextStream in(&fileCollege);
+            in<<str<<"\n";
+        }
+        fileCollege.close();
+    }
+}
+
+void DataProcess::saveGame()
+{
+    QFile fileGame("Game.txt");
+    if(!fileGame.open(QIODevice::ReadWrite | QIODevice::Text | QIODevice::Truncate)) {
+        qDebug()<<"Can't open the game file!";
+    }else {
+        for(int i=0; i < database.games.size(); i ++){
+            QString str = database.games[i].name + "|" + (QString)database.games[i].date
+                    + "|" + (QString)database.games[i].duration
+                    + "|" + database.games[i].time.toString("hh:mm")
+                    + "|" + database.games[i].place
+                    + "|" + (QString)database.games[i].number + "|";
+            QTextStream in(&fileGame);
+            in<<str<<"\n";
+        }
+        fileGame.close();
+    }
+}
+
+void DataProcess::saveStudent()
+{
+    QFile fileStudent("Student.txt");
+    if(!fileStudent.open(QIODevice::ReadWrite | QIODevice::Text | QIODevice::Truncate)) {
+        qDebug()<<"Can't open the student file!";
+    }else {
+        for(int i=0; i < database.students.size(); i ++){
+            QString str = database.students[i].name + "|" + (QString)database.students[i].college_id+ "|";
+            QTextStream in(&fileStudent);
+            in<<str<<"\n";
+        }
+        fileStudent.close();
+    }
+}
+
+void DataProcess::saveSignup()
+{
+    QFile fileSignup("Signup.txt");
+    if(!fileSignup.open(QIODevice::ReadWrite | QIODevice::Text | QIODevice::Truncate)) {
+        qDebug()<<"Can't open the signup file!";
+    }else {
+        for(int i=0; i < database.signups.size(); i ++){
+            QString str = (QString)database.signups[i].student_id + "|" + (QString)database.signups[i].game_id+ "|";
+            QTextStream in(&fileSignup);
+            in<<str<<"\n";
+        }
+        fileSignup.close();
+    }
+}
+
+void DataProcess::saveResult()
+{
+    QFile fileResult("Result.txt");
+    if(!fileResult.open(QIODevice::ReadWrite | QIODevice::Text | QIODevice::Truncate)) {
+        qDebug()<<"Can't open the result file!";
+    }else {
+        for(int i=0; i < database.results.size(); i ++){
+            QString str = (QString)database.results[i].student_id + "|"
+                    + (QString)database.results[i].game_id+ "|"
+                    + database.results[i].result+ "|";
+            QTextStream in(&fileResult);
+            in<<str<<"\n";
+        }
+        fileResult.close();
+    }
+}
+
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -62,10 +144,11 @@ int main(int argc, char *argv[])
             bool ok;
             game.id = rows;
             game.name = str.section("|", 0, 0);
-            game.date = QDate::fromString(str.section("|", 1, 1), "yyyy-MM-dd");
-            game.time = QTime::fromString(str.section("|", 2, 2), "hh:mm");
-            game.place = str.section("|", 3, 3);
-            game.number = str.section("|", 4, 4).toInt(&ok, 10);
+            game.date = str.section("|", 1, 1).toInt(&ok, 10);
+            game.duration = str.section("|", 2, 2).toInt(&ok, 10);
+            game.time = QTime::fromString(str.section("|", 3, 3), "hh:mm");
+            game.place = str.section("|", 4, 4);
+            game.number = str.section("|", 5, 5).toInt(&ok, 10);
 
             database.games.push_back(game);
         }

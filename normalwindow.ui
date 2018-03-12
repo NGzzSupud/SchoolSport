@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>463</width>
-    <height>282</height>
+    <width>460</width>
+    <height>220</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>210</y>
+     <x>71</x>
+     <y>150</y>
      <width>321</width>
      <height>33</height>
     </rect>
@@ -55,27 +55,45 @@
     </item>
    </layout>
   </widget>
-  <widget class="QComboBox" name="comboBox_sports">
+  <widget class="QWidget" name="gridLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>154</x>
-     <y>48</y>
-     <width>141</width>
-     <height>21</height>
+     <x>66</x>
+     <y>60</y>
+     <width>331</width>
+     <height>81</height>
     </rect>
    </property>
+   <layout class="QGridLayout" name="gridLayout_lineEdit">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetDefaultConstraint</enum>
+    </property>
+   </layout>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="label_game">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>50</y>
-     <width>98</width>
-     <height>16</height>
+     <x>190</x>
+     <y>30</y>
+     <width>200</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="text">
-    <string>Select Game:</string>
+    <string>Game</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>30</y>
+     <width>120</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Selected Game:</string>
    </property>
   </widget>
  </widget>

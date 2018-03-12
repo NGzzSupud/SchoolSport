@@ -9,7 +9,8 @@ struct Game
 {
     int id;
     QString name;
-    QDate date;
+    int date;
+    int duration;
     QTime time;
     QString place;
     int number;
@@ -53,6 +54,11 @@ public:
     QVector<Result> results;
     QVector<College> colleges;
 
+    static void saveCollege();
+    static void saveGame();
+    static void saveStudent();
+    static void saveSignup();
+    static void saveResult();
     static Game getGameById(int id);
     static Student getStudentById(int id);
     static College getCollegeById(int id);

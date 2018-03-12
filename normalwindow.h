@@ -15,19 +15,17 @@ class NormalWindow : public QWidget
 public:
     explicit NormalWindow(QWidget *parent = nullptr);
     ~NormalWindow();
-    void setCollege(QString college);
-    QString getCollege();
 
 signals:
 
 private slots:
     void displaySports();
+    void addLineEdit();
     void submit();
 
 private:
     Ui::NormalWindowUi *ui;
-    QVector<Game> games;
-    QString College;
+    QTableWidget *table;
 };
 
 #endif // NORMALWINDOW_H

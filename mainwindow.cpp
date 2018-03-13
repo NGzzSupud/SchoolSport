@@ -38,7 +38,7 @@ void MainWindow::changeCurrent()
 
 void MainWindow::manageCollege()
 {
-    static QDialog *mainWindow = new QDialog;
+    mainWindow = new QDialog;
 
     static QGridLayout *gridLayout = new QGridLayout;
 

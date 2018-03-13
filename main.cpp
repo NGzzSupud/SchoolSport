@@ -6,8 +6,19 @@
 #include <QDesktopWidget>
 #include <QFile>
 #include <QDebug>
+#include <QTextCodec>
 #include "dataprocess.h"
 DataProcess database;
+
+int DataProcess::studentIsExist(QString name)
+{
+    for(int i=0; i<database.students.size(); i++){
+        if(!database.students[i].name.compare(name)){
+            return i;
+        }
+    }
+    return -1;
+}
 
 void DataProcess::saveCollege()
 {
@@ -31,11 +42,12 @@ void DataProcess::saveGame()
         qDebug()<<"Can't open the game file!";
     }else {
         for(int i=0; i < database.games.size(); i ++){
-            QString str = database.games[i].name + "|" + (QString)database.games[i].date
-                    + "|" + (QString)database.games[i].duration
+            QString str = database.games[i].name + "|" + QString::number(database.games[i].date)
+                    + "|" + QString::number(database.games[i].duration)
                     + "|" + database.games[i].time.toString("hh:mm")
                     + "|" + database.games[i].place
-                    + "|" + (QString)database.games[i].number + "|";
+                    + "|" + QString::number(database.games[i].number)
+                    + "|" + QString::number(database.games[i].type) + "|";
             QTextStream in(&fileGame);
             in<<str<<"\n";
         }
@@ -50,7 +62,9 @@ void DataProcess::saveStudent()
         qDebug()<<"Can't open the student file!";
     }else {
         for(int i=0; i < database.students.size(); i ++){
-            QString str = database.students[i].name + "|" + (QString)database.students[i].college_id+ "|";
+            QString str = database.students[i].name + "|" + QString::number(database.students[i].college_id)+ "|"
+                    + QString::number(database.students[i].gameCount_f) + "|"
+                    + QString::number(database.students[i].gameCount_w) + "|";
             QTextStream in(&fileStudent);
             in<<str<<"\n";
         }
@@ -65,7 +79,7 @@ void DataProcess::saveSignup()
         qDebug()<<"Can't open the signup file!";
     }else {
         for(int i=0; i < database.signups.size(); i ++){
-            QString str = (QString)database.signups[i].student_id + "|" + (QString)database.signups[i].game_id+ "|";
+            QString str = QString::number(database.signups[i].student_id) + "|" + QString::number(database.signups[i].game_id)+ "|";
             QTextStream in(&fileSignup);
             in<<str<<"\n";
         }
@@ -80,8 +94,8 @@ void DataProcess::saveResult()
         qDebug()<<"Can't open the result file!";
     }else {
         for(int i=0; i < database.results.size(); i ++){
-            QString str = (QString)database.results[i].student_id + "|"
-                    + (QString)database.results[i].game_id+ "|"
+            QString str = QString::number(database.results[i].student_id) + "|"
+                    + QString::number(database.results[i].game_id)+ "|"
                     + database.results[i].result+ "|";
             QTextStream in(&fileResult);
             in<<str<<"\n";
@@ -94,6 +108,9 @@ void DataProcess::saveResult()
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+    QTextCodec *codec = QTextCodec::codecForName("UTF-8");
+    QTextCodec::setCodecForLocale(codec);
 
     //Read all files
     QFile fileCollege("College.txt");
@@ -149,7 +166,7 @@ int main(int argc, char *argv[])
             game.time = QTime::fromString(str.section("|", 3, 3), "hh:mm");
             game.place = str.section("|", 4, 4);
             game.number = str.section("|", 5, 5).toInt(&ok, 10);
-
+            game.type = str.section("|", 6, 6).toInt(&ok, 10);
             database.games.push_back(game);
         }
     }
@@ -165,7 +182,8 @@ int main(int argc, char *argv[])
             student.id = rows;
             student.name = str.section("|", 0, 0);
             student.college_id = str.section("|", 1, 1).toInt(&ok, 10);
-
+            student.gameCount_f = 0;
+            student.gameCount_w = 0;
             database.students.push_back(student);
         }
     }
@@ -181,10 +199,16 @@ int main(int argc, char *argv[])
             signup.id = rows;
             signup.student_id = str.section("|", 0, 0).toInt(&ok, 10);
             signup.game_id = str.section("|", 1, 1).toInt(&ok, 10);
-
+            if(database.games[signup.game_id - 1].type == 1){
+                database.students[signup.student_id - 1].gameCount_f ++;
+            }else {
+                database.students[signup.student_id - 1].gameCount_w ++;
+            }
             database.signups.push_back(signup);
         }
     }
+
+    DataProcess::saveStudent();
 
     Result result;
     while(!fileResult.atEnd()){

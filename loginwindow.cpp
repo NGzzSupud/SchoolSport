@@ -58,6 +58,7 @@ void LoginWindow::normalLogin()
                 if(!code.compare(database.colleges[position].code)){
                     //Login successfully
                     normalWin.show();
+                    normalWin.college = position;
                     this->close();
                 }else{
                     //Wrong code

@@ -3,6 +3,9 @@
 
 #include <QWidget>
 #include <QTableWidget>
+#include <QGridLayout>
+#include <QLabel>
+#include <QPushButton>
 #include "dataprocess.h"
 
 namespace Ui {
@@ -15,6 +18,7 @@ class NormalWindow : public QWidget
 public:
     explicit NormalWindow(QWidget *parent = nullptr);
     ~NormalWindow();
+    int college;
 
 signals:
 
@@ -26,6 +30,7 @@ private slots:
 private:
     Ui::NormalWindowUi *ui;
     QTableWidget *table;
+    QGridLayout *grid;
 };
 
 #endif // NORMALWINDOW_H

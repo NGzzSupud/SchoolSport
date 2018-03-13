@@ -9,6 +9,7 @@ struct Game
 {
     int id;
     QString name;
+    int type;
     int date;
     int duration;
     QTime time;
@@ -28,6 +29,8 @@ struct Student
     int id;
     int college_id;
     QString name;
+    int gameCount_f;
+    int gameCount_w;
 };
 
 struct Signup
@@ -59,6 +62,7 @@ public:
     static void saveStudent();
     static void saveSignup();
     static void saveResult();
+    static int studentIsExist(QString name);
     static Game getGameById(int id);
     static Student getStudentById(int id);
     static College getCollegeById(int id);

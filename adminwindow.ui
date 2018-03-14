@@ -137,14 +137,14 @@
   <widget class="QPushButton" name="pushButton_release">
    <property name="geometry">
     <rect>
-     <x>160</x>
+     <x>260</x>
      <y>240</y>
      <width>75</width>
      <height>23</height>
     </rect>
    </property>
    <property name="text">
-    <string>发布</string>
+    <string>release</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit">
@@ -155,6 +155,19 @@
      <width>91</width>
      <height>20</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_search">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>240</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>search</string>
    </property>
   </widget>
  </widget>

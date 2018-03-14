@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QPushButton>
+#include <QTableWidget>
 
 namespace Ui {
 class AdminWindowUi;
@@ -17,10 +18,14 @@ public:
 signals:
 
 public slots:
-
+    void searchWindow();
+    void addRow();
+    void deleteRow();
+    void saveGame();
 private:
     Ui::AdminWindowUi *ui;
     void changeCurrent();
+    QTableWidget *table;
 };
 
 #endif // ADMINWINDOW_H

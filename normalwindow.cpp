@@ -241,7 +241,7 @@ void NormalWindow::submit()
             if(!(database.games[table->currentRow()].type == 2 && database.students[index].gameCount_t == TRACK_LIMITED)){
                 for(int i=0; i<database.signups.size(); i++){
                     //qDebug()<<"test";
-                    if(database.signups[i].student_id == index && database.signups[i].game_id == table->currentRow()){
+                    if(database.signups[i].team_id == index && database.signups[i].game_id == table->currentRow()){
                         //qDebug()<<"test";
                         QMessageBox::about(this, tr("Tips"), database.students[index].name + " has signed up this game.");
                         flag = false;
@@ -250,7 +250,7 @@ void NormalWindow::submit()
                 }
                 if(flag){
                     Signup signup;
-                    signup.student_id = index;
+                    signup.team_id = index;
                     signup.game_id = table->currentRow();
                     database.signups.push_back(signup);
                     if(database.games[signup.game_id].type == 1){

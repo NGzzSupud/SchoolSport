@@ -41,7 +41,7 @@ void LoginWindow::normalLogin()
     QString college = ui->lineEdit_college->text();
     QString code = ui->lineEdit_code->text();
 
-    if(college != "" && code != ""){
+    if(!college.isEmpty() && !code.isEmpty()){
         int position;
         //Authenticate college and inviteCode
         if(Current == -1){
@@ -49,6 +49,7 @@ void LoginWindow::normalLogin()
         }else {
             bool flag = false;
             for(int i=0; i<database.colleges.size(); i ++){
+                //qDebug()<<database.colleges[i].name<<" == "<<college;
                 if(!college.compare(database.colleges[i].name)){
                     flag = true;
                     position = i;

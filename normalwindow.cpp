@@ -1,6 +1,8 @@
+#define TAMOSI_LIMITED 1    //The number of tamosi student can sign up
+#define TRACK_LIMITED 1     //The number of track game student can sign up
+
 #include "normalwindow.h"
 #include "ui_normalwindow.h"
-//#include <QMessageBox>
 #include <QDialog>
 #include <QLineEdit>
 #include <QGridLayout>
@@ -67,6 +69,9 @@ NormalWindow::~NormalWindow()
     delete ui;
 }
 
+/*
+ *  Display a window to show Game List
+ */
 void NormalWindow::displaySports()
 {
     static QDialog *mainWindow = new QDialog;
@@ -74,13 +79,14 @@ void NormalWindow::displaySports()
     static QGridLayout *gridLayout = new QGridLayout;
 
     //create a table
-    table = new QTableWidget(0,3);
+    table = new QTableWidget(0,4);
     QStringList colLabels;
-    colLabels << "Game" << "Place" << "Number";
+    colLabels << "Game" << "Place" << "Type" << "Number";
     table->setHorizontalHeaderLabels(colLabels);
     table->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    //Add rows and fill in data
 
+
+    //Add rows and fill in data
     for(int i = 0; i < database.games.size(); i ++){
         //qDebug()<<games[i].id<<games[i].name<<games[i].date<<games[i].time<<games[i].place<<games[i].number;
 
@@ -88,24 +94,35 @@ void NormalWindow::displaySports()
         QTableWidgetItem *item1;
         QTableWidgetItem *item2;
         QTableWidgetItem *item3;
+        QTableWidgetItem *item4;
         item1 = new QTableWidgetItem;
         item2 = new QTableWidgetItem;
         item3 = new QTableWidgetItem;
+        item4 = new QTableWidgetItem;
         item1->setText(database.games[i].name);
         item1->setTextAlignment(Qt::AlignCenter);
         table->setItem(i, 0, item1);
         item2->setText(database.games[i].place);
         item2->setTextAlignment(Qt::AlignCenter);
         table->setItem(i, 1, item2);
-        item3->setText(QString::number(database.games[i].number));
+        if(database.games[i].type == 1){
+            item3->setText("Tamosi");
+        }else{
+            item3->setText("Track");
+        }
         item3->setTextAlignment(Qt::AlignCenter);
         table->setItem(i, 2, item3);
+        item4->setText(QString::number(database.games[i].number));
+        item4->setTextAlignment(Qt::AlignCenter);
+        table->setItem(i, 3, item4);
     }
 
 
     //Set the height of each row
     for(int i = 0; i < database.games.size(); i++)
         table->setRowHeight(i, 22);
+
+    //Beautify the table
     table->horizontalHeader()->setStretchLastSection(true);
     table->setSelectionBehavior(QAbstractItemView::SelectRows);
     table->setAlternatingRowColors(true);
@@ -115,9 +132,9 @@ void NormalWindow::displaySports()
 
     mainWindow->setLayout(gridLayout);
 
-    mainWindow->resize(450, 80 + database.games.size() * 22);
+    mainWindow->resize(550, 80 + database.games.size() * 22);
     mainWindow->setWindowTitle("Games Timer");
-    mainWindow->setGeometry(this->geometry().x() - 450, (QApplication::desktop()->height() - mainWindow->height())/2, 450, 80 + database.games.size() * 22);
+    mainWindow->setGeometry(this->geometry().x() - 550, (QApplication::desktop()->height() - mainWindow->height())/2, 550, 80 + database.games.size() * 22);
     mainWindow->setWindowFlags(mainWindow->windowFlags()&~Qt::WindowMaximizeButtonHint);
     mainWindow->setWindowFlags(Qt::WindowCloseButtonHint | Qt::MSWindowsFixedSizeDialogHint);
     mainWindow->setFixedSize(mainWindow->width(), mainWindow->height());
@@ -127,6 +144,9 @@ void NormalWindow::displaySports()
 
 }
 
+/*
+ *  Change the number of lineEdits according to game's number.
+ */
 void NormalWindow::addLineEdit()
 {
     //qDebug()<<"changed";
@@ -193,56 +213,65 @@ void NormalWindow::addLineEdit()
 
 }
 
+/*
+ *  Submit and save the sign up infomation.
+ */
 void NormalWindow::submit()
 {
     QList<QLineEdit*> lines = this->findChildren<QLineEdit*>("line");
     qDebug()<<"size:"<<lines.size();
     int rows = database.students.size();
     Student student;
-    int position = 0;
+    int index = 0;
     foreach (QLineEdit* line, lines) {
         bool flag = true;
         if(DataProcess::studentIsExist(line->text()) == -1){
-            student.id = rows;
             student.name = line->text();
             student.college_id = college;
             student.gameCount_f = 0;
-            student.gameCount_w = 0;
+            student.gameCount_t = 0;
             database.students.push_back(student);
-            position = database.students.size() - 1;
+            index = database.students.size() - 1;
             rows ++;
         }else {
-            position = DataProcess::studentIsExist(line->text());
+            index = DataProcess::studentIsExist(line->text());
         }
-        //qDebug()<<position;
-        if(database.students[position].gameCount_f < 1){
-            //qDebug()<<"test2";
-            for(int i=0; i<database.signups.size(); i++){
-                //qDebug()<<"test3";
-                if(database.signups[i].student_id == position && database.signups[i].game_id == table->currentRow()){
-                    //qDebug()<<"test4";
-                    QMessageBox::about(this, tr("Tips"), database.students[position].name + " has signed up this game.");
-                    flag = false;
-                    break;
+        //qDebug()<<index;
+        if(!(database.games[table->currentRow()].type == 1 && database.students[index].gameCount_f == TAMOSI_LIMITED)){
+            if(!(database.games[table->currentRow()].type == 2 && database.students[index].gameCount_t == TRACK_LIMITED)){
+                for(int i=0; i<database.signups.size(); i++){
+                    //qDebug()<<"test";
+                    if(database.signups[i].team_id == index && database.signups[i].game_id == table->currentRow()){
+                        //qDebug()<<"test";
+                        QMessageBox::about(this, tr("Tips"), database.students[index].name + " has signed up this game.");
+                        flag = false;
+                        break;
+                    }
                 }
-            }
-            if(flag){
-                Signup signup;
-                signup.id = database.signups.size() + 1;
-                signup.student_id = position;
-                signup.game_id = table->currentRow();
-                database.signups.push_back(signup);
-                database.students[position].gameCount_f ++;
-                //qDebug()<<"insert successfully";
+                if(flag){
+                    Signup signup;
+                    signup.team_id = index;
+                    signup.game_id = table->currentRow();
+                    database.signups.push_back(signup);
+                    if(database.games[signup.game_id].type == 1){
+                        database.students[index].gameCount_f ++;
+                    }else {
+                        database.students[index].gameCount_t ++;
+                    }
+                    //qDebug()<<"insert successfully";
+                }
+
+            }else {
+                QMessageBox::about(this, tr("Tips"), database.students[index].name + " has already signed up a track game.");
+                break;
             }
         }else {
-            QMessageBox::about(this, tr("Tips"), database.students[position].name + " has signed up two games.");
+            QMessageBox::about(this, tr("Tips"), database.students[index].name + " has already signed up a tamosi.");
             break;
         }
     }
     //qDebug()<<database.students.size();
     DataProcess::saveStudent();
-
     DataProcess::saveSignup();
 
 }

@@ -24,6 +24,9 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+/*
+ *  Change window according to the game.
+ */
 void MainWindow::changeCurrent()
 {
     //qDebug()<<
@@ -35,7 +38,9 @@ void MainWindow::changeCurrent()
     this->close();
 }
 
-
+/*
+ *  Display a window to show college information.
+ */
 void MainWindow::manageCollege()
 {
     mainWindow = new QDialog;
@@ -63,7 +68,7 @@ void MainWindow::manageCollege()
 
     //Add rows and fill in data
     for(int i = 0; i < database.colleges.size(); i ++){
-        //qDebug()<<games[i].id<<games[i].name<<games[i].date<<games[i].time<<games[i].place<<games[i].number;
+        //qDebug()<<games[i].name<<games[i].date<<games[i].time<<games[i].place<<games[i].number;
 
         table->setRowCount(i + 1);
         QTableWidgetItem *item1;
@@ -105,7 +110,9 @@ void MainWindow::manageCollege()
 
 }
 
-
+/*
+ *  Add a new row on the table.
+ */
 void MainWindow::addRow()
 {
     //qDebug()<<"add";
@@ -121,6 +128,9 @@ void MainWindow::addRow()
     table->setItem(row, 1, item2);
 }
 
+/*
+ *  Delete the row which was chosen on the table.
+ */
 void MainWindow::deleteRow()
 {
     int rowIndex = table->currentRow();
@@ -129,6 +139,9 @@ void MainWindow::deleteRow()
     }
 }
 
+/*
+ *  Save the college information on the table.
+ */
 void MainWindow::saveCollege()
 {
     //qDebug()<<"save";

@@ -1,7 +1,7 @@
-Game1|1|120|11:11|Place1|1|
-Game2|1|60|11:11|Place2|1|
-Game3|1|120|11:11|Place1|4|
-Game4|2|90|11:11|Place1|1|
-Game5|2|90|11:11|Place1|4|
-Game6|2|90|11:11|Place2|4|
-Game7|3|60|11:11|Place3|1|
+Game1|1|120|11:11|Place1|1|1|
+Game2|1|60|11:11|Place2|1|2|
+Game3|1|120|11:11|Place1|1|1|
+Game4|2|90|11:11|Place1|1|2|
+Game5|2|90|11:11|Place1|1|1|
+Game6|2|90|11:11|Place2|4|1|
+Game7|3|60|11:11|Place3|4|2|

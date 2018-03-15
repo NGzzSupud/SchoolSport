@@ -43,15 +43,15 @@ void MainWindow::changeCurrent()
  */
 void MainWindow::manageCollege()
 {
-    mainWindow = new QDialog;
+    static QDialog *mainWindow = new QDialog;
 
     static QGridLayout *gridLayout = new QGridLayout;
 
-    static QPushButton * button_add = new QPushButton(this);
+    button_add = new QPushButton(this);
     button_add->setText("Add");
-    static QPushButton * button_delete  = new QPushButton(this);
+    button_delete  = new QPushButton(this);
     button_delete->setText("Delete");
-    static QPushButton * button_save = new QPushButton(this);
+    button_save = new QPushButton(this);
     button_save->setText("Save");
 
     connect(button_add, &QPushButton::clicked, this, &MainWindow::addRow);

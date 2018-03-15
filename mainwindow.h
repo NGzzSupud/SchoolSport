@@ -27,7 +27,6 @@ private slots:
 private:
     Ui::MainWindow *ui;
     AdminWindow adminWin_1;
-    QDialog *mainWindow;
     QTableWidget *table;
     QPushButton * button_add;
     QPushButton * button_delete;

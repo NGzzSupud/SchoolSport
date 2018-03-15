@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QTableWidget>
+#include <QDialog>
 
 namespace Ui {
 class AdminWindowUi;
@@ -15,6 +16,7 @@ class AdminWindow : public QWidget
 public:
     explicit AdminWindow(QWidget *parent = nullptr);
     ~AdminWindow();
+
 signals:
 
 public slots:
@@ -22,10 +24,14 @@ public slots:
     void addRow();
     void deleteRow();
     void saveGame();
+
 private:
     Ui::AdminWindowUi *ui;
     void changeCurrent();
     QTableWidget *table;
+    QPushButton *button_add;
+    QPushButton *button_delete;
+    QPushButton *button_save;
 };
 
 #endif // ADMINWINDOW_H

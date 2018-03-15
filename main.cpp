@@ -68,6 +68,7 @@ int main(int argc, char *argv[])
             game.name = str.section("|", 0, 0);
             game.date = str.section("|", 1, 1).toInt(&ok, 10);
             game.duration = str.section("|", 2, 2).toInt(&ok, 10);
+            //qDebug()<<game.duration;
             game.time = QTime::fromString(str.section("|", 3, 3), "hh:mm");
             game.place = str.section("|", 4, 4);
             game.number = str.section("|", 5, 5).toInt(&ok, 10);

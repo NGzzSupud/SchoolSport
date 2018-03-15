@@ -36,14 +36,15 @@ void AdminWindow::changeCurrent(){
 }
 
 void AdminWindow::searchWindow(){
-    QDialog *gameWindow = new QDialog;
-    QGridLayout *gridlayout = new QGridLayout;
 
-    static QPushButton * button_add = new QPushButton(this);
-    button_add->setText("Add");
-    static QPushButton * button_delete  = new QPushButton(this);
+    static QDialog *gameWindow = new QDialog;
+    static QGridLayout *gridlayout = new QGridLayout;
+
+    /*button_add = new QPushButton(this);
+    button_add->setText("Add");*/
+    button_delete  = new QPushButton(this);
     button_delete->setText("Delete");
-    static QPushButton * button_save = new QPushButton(this);
+    button_save = new QPushButton(this);
     button_save->setText("Save");
 
     connect(button_add, &QPushButton::clicked, this, &AdminWindow::addRow);
@@ -67,7 +68,13 @@ void AdminWindow::searchWindow(){
         item3 = new QTableWidgetItem;
         item4 = new QTableWidgetItem;
         item5 = new QTableWidgetItem;
-        item1->setText(QString::number(database.games[i].type));
+        if(database.games[i].type == 1){
+           item1->setText("Tamosi");
+        }
+        else{
+           item1->setText("Track");
+        }
+
         item1->setTextAlignment(Qt::AlignCenter);
         table->setItem(i, 0, item1);
         item2->setText(database.games[i].name);
@@ -93,15 +100,15 @@ void AdminWindow::searchWindow(){
 
     gridlayout->setColumnStretch(0,0);
     gridlayout->addWidget(table,0,0,1,5);
-    gridlayout->addWidget(button_add,1,0,1,1);
-    gridlayout->addWidget(button_delete,1,2,1,1);
+    //gridlayout->addWidget(button_add,1,0,1,1);
+    gridlayout->addWidget(button_delete,1,0,1,1);
     gridlayout->addWidget(button_save,1,4,1,1);
 
     gameWindow->setLayout(gridlayout);
 
-    gameWindow->resize(360,250);
+    gameWindow->resize(480,250);
     gameWindow->setWindowTitle("Game message");
-    gameWindow->setGeometry(this->geometry().x()-360,(QApplication::desktop()->height()-gameWindow->height())/2,360,250);
+    gameWindow->setGeometry(this->geometry().x()-480,(QApplication::desktop()->height()-gameWindow->height())/2,480,250);
     gameWindow->setWindowFlags(gameWindow->windowFlags()&~Qt::WindowMaximizeButtonHint);
     gameWindow->setWindowFlags(Qt::WindowCloseButtonHint | Qt::MSWindowsFixedSizeDialogHint);
     gameWindow->setFixedSize(gameWindow->width(), gameWindow->height());
@@ -127,8 +134,8 @@ void AdminWindow::addRow(){
     table->setItem(row, 0, item1);
     table->setItem(row, 1, item2);
     table->setItem(row, 2, item3);
-    table->setItem(row, 3, item3);
-    table->setItem(row, 4, item4);
+    table->setItem(row, 3, item4);
+    table->setItem(row, 4, item5);
 }
 
 void AdminWindow::deleteRow(){
@@ -153,12 +160,13 @@ void AdminWindow::saveGame(){
          //qDebug()<<"clear";
          database.games.clear();            //qDebug()<<database.games.size();
          Game game;
+         bool ok;
          for(int i=0; i<table->rowCount(); i++){
-             QString::number(game.type) = table->item(i, 0)->text();
+             game.type = table->item(i, 0)->text().toInt(&ok,10);
              game.name = table->item(i, 1)->text();
-             QString::number(game.duration) = table->item(i, 2)->text();
+             game.duration = table->item(i, 2)->text().toInt(&ok,10);
              game.place = table->item(i, 3)->text();
-             QString::number(game.number) = table->item(i, 4)->text();
+             game.number = table->item(i, 4)->text().toInt(&ok,10);
              database.games.push_back(game);
          }
          //qDebug()<<database.games.size();

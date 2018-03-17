@@ -219,6 +219,9 @@ void NormalWindow::addLineEdit()
 
 void NormalWindow::submit()
 {
+
+
+
     /*
     QList<QLineEdit*> lines = this->findChildren<QLineEdit*>("line");
     //qDebug()<<"size:"<<lines.size();

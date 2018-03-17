@@ -14,6 +14,17 @@
 #include "algorithm/fuck.h"
 extern DataProcess database;
 
+extern int sportPlace[20];
+extern int sM[5][5][300];// placeAndSport[地点][日子][时间] = 运动名称
+extern int sportTime[20]; // sportTime[比赛] = 时间
+
+//int xiangmuTime[20]; //xiangmu[项目] = 时间
+extern int xiangmu[20]; //项目人数统计 xiangmu[比赛项目] = 报名人数
+extern int trueXiangmu[20];  //trueXiangmu[顺序] = 比赛项目
+extern int deleteXiangmu[20];
+extern People struct_people[300];
+
+
 AdminWindow::AdminWindow(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::AdminWindowUi)
@@ -46,19 +57,23 @@ void AdminWindow::changeCurrent(){
         sportPlace[i] = database.games[i-1].place.toInt(&ok, 10);
         sportTime[i] = database.games[i-1].duration;
     }
+    //qDebug()<<"jjj";
 
-    for(int i=1; i<database.signups.size(); i++){
-        if(database.games[database.signups[i].game_id].type == 1){
-            struct_people[database.signups[i].student_id].sport_one = database.signups[i].game_id;
+    for(int i=1; i<=database.signups.size(); i++){
+        //qDebug()<<"jjj";
+        if(database.games[database.signups[i-1].game_id - 1].type == 1){
+            struct_people[database.signups[i-1].student_id].sport_one = database.signups[i-1].game_id;
         }else {
-            struct_people[database.signups[i].student_id].sport_two = database.signups[i].game_id;
+            struct_people[database.signups[i-1].student_id].sport_two = database.signups[i-1].game_id;
         }
     }
+    //qDebug()<<"jjj";
     cel();
     for(int i = 0;i<299;i++)
     {
-        celHaveSport(placeTime[struct_people[i].sport_one], placeTime[struct_people[i].sport_two], struct_people[i].sport_one, struct_people[i].sport_two);
+        celHaveSport(sportTime[struct_people[i].sport_one], sportTime[struct_people[i].sport_two], struct_people[i].sport_one, struct_people[i].sport_two);
     }
+qDebug()<<"jjj";
 }
 
 void AdminWindow::releaseGame(){

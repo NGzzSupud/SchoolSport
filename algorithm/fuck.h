@@ -2,14 +2,7 @@
 bool ynComplict(int oneB, int oneE, int twoB, int twoE);
 
 
-int sportPlace[20];
-int sM[5][5][300];// placeAndSport[地点][日子][时间] = 运动名称
-int sportTime[20]; // sportTime[比赛] = 时间
 
-//int xiangmuTime[20]; //xiangmu[项目] = 时间
-int xiangmu[20]; //项目人数统计 xiangmu[比赛项目] = 报名人数
-int trueXiangmu[20];  //trueXiangmu[顺序] = 比赛项目
-int deleteXiangmu[20];
 /*
 struct PlaygroundControl
 {
@@ -28,7 +21,7 @@ struct People
     //int sportTime[4] = {0}; //比赛对应的时间
     //int BTime[4] = {0}; // [项目] = 时间
     //int ETime[4] = {0};
-}struct_people[300];
+};
 
 
 /*

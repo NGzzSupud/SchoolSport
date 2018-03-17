@@ -10,6 +10,7 @@
 #include <QTableWidget>
 #include "dataprocess.h"
 #include <QString>
+#include "loginwindow.h"
 extern DataProcess database;
 
 AdminWindow::AdminWindow(QWidget *parent) :
@@ -35,8 +36,8 @@ void AdminWindow::changeCurrent(){
     QString configFilePath = "config.ini";
     QSettings settings(configFilePath,QSettings::IniFormat);
     settings.setValue("Game/Current", "2");
-    //admin_2.show();
-    //this->close();
+    adminWin_2.show();
+    this->close();
 }
 
 void AdminWindow::releaseGame(){

@@ -6,6 +6,7 @@
 #include "normalwindow.h"
 #include "mainwindow.h"
 #include "adminwindow.h"
+#include "entrywindow.h"
 
 namespace Ui {
 class LoginWindowUi;
@@ -29,8 +30,7 @@ private:
     NormalWindow normalWin;
     MainWindow beginWin;
     AdminWindow adminWin_1;
-
-
+    Entrywindow adminWin_2;
   //SignupWindow adminWin_2;
     int Current;
 };

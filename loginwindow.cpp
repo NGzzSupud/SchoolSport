@@ -109,9 +109,9 @@ void LoginWindow::jumpWindow(int flag){
     case 1:
         adminWin_1.show();
         break;
-    /*case 2:
+    case 2:
         adminWin_2.show();
-        break;*/
+        break;
     default:
         break;
     }

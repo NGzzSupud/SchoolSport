@@ -5,6 +5,7 @@
 #include <QPushButton>
 #include <QTableWidget>
 #include <QDialog>
+#include "entrywindow.h"
 
 namespace Ui {
 class AdminWindowUi;
@@ -31,6 +32,7 @@ private:
     QTableWidget *table;
     QPushButton *button_delete;
     QPushButton *button_save;
+    Entrywindow adminWin_2;
 };
 
 #endif // ADMINWINDOW_H

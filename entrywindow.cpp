@@ -12,6 +12,8 @@
 #include "dataprocess.h"
 extern DataProcess database;
 
+int gamePlayerNum[10],gamePlayer[10][10];
+
 Entrywindow::Entrywindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Entrywindow)
@@ -76,6 +78,19 @@ Entrywindow::Entrywindow(QWidget *parent) :
     //connect(ui->pushButton_submit,&QPushButton::clicked,this,&Entrywindow::submit);
     connect(ui->tableWidget_game, &QTableWidget::clicked, this, &Entrywindow::addLineEdit);
 
+   qDebug()<<"2";
+    for(int i=1;i<=database.games.size();i++)
+    {
+        gamePlayerNum[i]=0;
+        for(int j=0;j<database.signups.size();j++){
+            if(database.signups[j].game_id==i){   qDebug()<<"1";
+                gamePlayer[i][gamePlayerNum[i]]=database.signups[j].team_id;
+                gamePlayerNum[i]++;
+                //sizeof(gamePlayer[i])/sizeof(int);
+            }
+        }
+    }
+    qDebug()<<gamePlayerNum[0];
 
 
 }
@@ -90,8 +105,7 @@ Entrywindow::~Entrywindow()
  */
 void Entrywindow::addLineEdit()
 {
-    qDebug()<<"changed";
-    this->setFixedSize(460, 100 + database.teams[ui->tableWidget_game->currentRow()].number * 40);
+    this->setFixedSize(460, 100 + sizeof(gamePlayer[ui->tableWidget_game->currentRow()])/sizeof(int) * 40);
     QList<QLabel*> labels = ui->gridLayout_result->findChildren<QLabel*>("label");
     QList<QLineEdit*> lines = ui->gridLayout_result->findChildren<QLineEdit*>("line");
     QList<QPushButton*> buttons = ui->gridLayout_result->findChildren<QPushButton*>("button");
@@ -116,9 +130,11 @@ void Entrywindow::addLineEdit()
     }
 
     //ui->label_game->setText(database.games[table->currentRow()].name);
-    for(int i=0; i<database.teams[ui->tableWidget_game->currentRow()].number; i++){
+    for(int i=0; i<gamePlayerNum[ui->tableWidget_game->currentRow()]; i++){
+        //qDebug()<<j;
+        qDebug()<<"changed";
         QLabel * label_name = new QLabel(this);
-        label_name->setText( database.students[database.teams[ui->tableWidget_game->currentRow()].student_id[0]].name);
+        label_name->setText( database.students[database.teams[gamePlayer[ui->tableWidget_game->currentRow()][i]].student_id[0]].name);
         label_name->setAlignment(Qt::AlignCenter);
         label_name->setObjectName("label");
         QLineEdit * lineEdit = new QLineEdit(this);
@@ -127,7 +143,7 @@ void Entrywindow::addLineEdit()
         ui->gridLayout_result->addWidget(label_name, i+1, 1);
         ui->gridLayout_result->addWidget(lineEdit, i+1, 3);
     }
-
+    qDebug()<<"changed";
     /*QLabel * label_sports = new QLabel(this);
     label_sports->setText("Sport Name:");
     label_sports->setAlignment(Qt::AlignCenter);
@@ -151,3 +167,4 @@ void Entrywindow::addLineEdit()
 /*
  *  Submit and save the sign up infomation.
  */
+//void submit

@@ -21,15 +21,14 @@ signals:
 
 public slots:
     void searchWindow();
-    void addRow();
     void deleteRow();
     void saveGame();
 
 private:
     Ui::AdminWindowUi *ui;
     void changeCurrent();
+    void releaseGame();
     QTableWidget *table;
-    QPushButton *button_add;
     QPushButton *button_delete;
     QPushButton *button_save;
 };

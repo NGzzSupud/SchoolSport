@@ -38,11 +38,11 @@
     <string>Game Release</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_3">
+  <widget class="QLabel" name="label_duration">
    <property name="geometry">
     <rect>
      <x>100</x>
-     <y>100</y>
+     <y>260</y>
      <width>80</width>
      <height>20</height>
     </rect>
@@ -57,11 +57,11 @@
     <string>Duration:</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_5">
+  <widget class="QLabel" name="label_minutes">
    <property name="geometry">
     <rect>
      <x>280</x>
-     <y>100</y>
+     <y>260</y>
      <width>54</width>
      <height>20</height>
     </rect>
@@ -76,11 +76,11 @@
     <string>Minutes</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_6">
+  <widget class="QLabel" name="label_place">
    <property name="geometry">
     <rect>
      <x>100</x>
-     <y>140</y>
+     <y>180</y>
      <width>60</width>
      <height>20</height>
     </rect>
@@ -95,7 +95,17 @@
     <string>Place:</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_3">
+  <widget class="QLineEdit" name="lineEdit_place">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>180</y>
+     <width>113</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_name">
    <property name="geometry">
     <rect>
      <x>180</x>
@@ -105,21 +115,11 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_4">
-   <property name="geometry">
-    <rect>
-     <x>180</x>
-     <y>180</y>
-     <width>113</width>
-     <height>20</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_7">
+  <widget class="QLabel" name="label_name">
    <property name="geometry">
     <rect>
      <x>100</x>
-     <y>180</y>
+     <y>140</y>
      <width>50</width>
      <height>20</height>
     </rect>
@@ -137,7 +137,7 @@
   <widget class="QPushButton" name="pushButton_release">
    <property name="geometry">
     <rect>
-     <x>250</x>
+     <x>170</x>
      <y>310</y>
      <width>75</width>
      <height>23</height>
@@ -147,11 +147,11 @@
     <string>release</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="lineEdit_duration">
    <property name="geometry">
     <rect>
      <x>180</x>
-     <y>100</y>
+     <y>260</y>
      <width>91</width>
      <height>20</height>
     </rect>
@@ -170,13 +170,13 @@
     <string>search</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_2">
+  <widget class="QLabel" name="label_number">
    <property name="geometry">
     <rect>
      <x>100</x>
      <y>220</y>
      <width>54</width>
-     <height>12</height>
+     <height>20</height>
     </rect>
    </property>
    <property name="font">
@@ -189,21 +189,11 @@
     <string>Number:</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_2">
-   <property name="geometry">
-    <rect>
-     <x>180</x>
-     <y>220</y>
-     <width>113</width>
-     <height>20</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_4">
+  <widget class="QLabel" name="label_type">
    <property name="geometry">
     <rect>
      <x>100</x>
-     <y>260</y>
+     <y>100</y>
      <width>54</width>
      <height>20</height>
     </rect>
@@ -218,12 +208,12 @@
     <string>Type:</string>
    </property>
   </widget>
-  <widget class="QComboBox" name="comboBox">
+  <widget class="QComboBox" name="comboBox_type">
    <property name="geometry">
     <rect>
      <x>180</x>
-     <y>260</y>
-     <width>101</width>
+     <y>100</y>
+     <width>111</width>
      <height>22</height>
     </rect>
    </property>
@@ -237,6 +227,39 @@
      <string>Track</string>
     </property>
    </item>
+  </widget>
+  <widget class="QComboBox" name="comboBox_number">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>220</y>
+     <width>69</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>1</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>4</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QPushButton" name="pushButton_complete">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>310</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>complete</string>
+   </property>
   </widget>
  </widget>
  <resources/>

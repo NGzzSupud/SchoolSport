@@ -19,8 +19,9 @@ AdminWindow::AdminWindow(QWidget *parent) :
     ui->setupUi(this);
     this->move ((QApplication::desktop()->width() - this->width())/2,(QApplication::desktop()->height() - this->height())/2);
     this->setFixedSize(this->width(), this->height());
-    connect(ui->pushButton_release,&QPushButton::clicked,this,&AdminWindow::changeCurrent);
+    connect(ui->pushButton_release,&QPushButton::clicked,this,&AdminWindow::releaseGame);
     connect(ui->pushButton_search,&QPushButton::clicked,this,&AdminWindow::searchWindow);
+    connect(ui->pushButton_complete,&QPushButton::clicked,this,&AdminWindow::changeCurrent);
 }
 
 
@@ -33,6 +34,62 @@ void AdminWindow::changeCurrent(){
     QString configFilePath = "config.ini";
     QSettings settings(configFilePath,QSettings::IniFormat);
     settings.setValue("Game/Current", "2");
+    //admin_2.show();
+    //this->close();
+}
+
+void AdminWindow::releaseGame(){
+    searchWindow();
+    int row = table->rowCount();
+    table->setRowCount(row);
+    table->insertRow(row);
+    table->setRowHeight(row,25);
+
+    QTableWidgetItem *item1;
+    QTableWidgetItem *item2;
+    QTableWidgetItem *item3;
+    QTableWidgetItem *item4;
+    QTableWidgetItem *item5;
+
+    item1 = new QTableWidgetItem;
+    item2 = new QTableWidgetItem;
+    item3 = new QTableWidgetItem;
+    item4 = new QTableWidgetItem;
+    item5 = new QTableWidgetItem;
+    QString input_name=ui->lineEdit_name->text();
+    QString input_duration=ui->lineEdit_duration->text();
+    QString input_place=ui->lineEdit_place->text();
+    if(input_name.isEmpty() || input_duration.isEmpty() || input_place.isEmpty()){
+       QMessageBox::about(this, tr("Tips"), tr("Input should not be empty."));
+       searchWindow();
+    }
+    else{
+    item1->setText(ui->comboBox_type->currentText());
+    item2->setText(ui->lineEdit_name->text());
+    item3->setText(ui->lineEdit_duration->text());
+    item4->setText(ui->lineEdit_place->text());
+    item5->setText(ui->comboBox_number->currentText());
+    table->setItem(row, 0, item1);
+    table->setItem(row, 1, item2);
+    table->setItem(row, 2, item3);
+    table->setItem(row, 3, item4);
+    table->setItem(row, 4, item5);
+    QMessageBox message(QMessageBox::Warning,"Warning","Really to release?",QMessageBox::Yes|QMessageBox::No,NULL);
+    if (message.exec()==QMessageBox::Yes)
+    {
+       //qDebug()<<"clicked yes\n";
+        saveGame();
+        ui->lineEdit_duration->clear();
+        ui->lineEdit_name->clear();
+        ui->lineEdit_place->clear();
+        searchWindow();
+    }
+    else
+    {
+        //qDebug()<<"clicked no\n";
+        searchWindow();
+    }
+  }
 }
 
 void AdminWindow::searchWindow(){
@@ -47,7 +104,6 @@ void AdminWindow::searchWindow(){
     button_save = new QPushButton(this);
     button_save->setText("Save");
 
-    connect(button_add, &QPushButton::clicked, this, &AdminWindow::addRow);
     connect(button_delete, &QPushButton::clicked, this, &AdminWindow::deleteRow);
     connect(button_save, &QPushButton::clicked, this, &AdminWindow::saveGame);
 
@@ -100,7 +156,6 @@ void AdminWindow::searchWindow(){
 
     gridlayout->setColumnStretch(0,0);
     gridlayout->addWidget(table,0,0,1,5);
-    //gridlayout->addWidget(button_add,1,0,1,1);
     gridlayout->addWidget(button_delete,1,0,1,1);
     gridlayout->addWidget(button_save,1,4,1,1);
 
@@ -113,29 +168,6 @@ void AdminWindow::searchWindow(){
     gameWindow->setWindowFlags(Qt::WindowCloseButtonHint | Qt::MSWindowsFixedSizeDialogHint);
     gameWindow->setFixedSize(gameWindow->width(), gameWindow->height());
     gameWindow->show();
-}
-
-void AdminWindow::addRow(){
-    //qDebug()<<"add";
-    int row = table->rowCount();
-    table->setRowCount(row);
-    table->insertRow(row);
-    table->setRowHeight(row,25);
-    QTableWidgetItem *item1;
-    QTableWidgetItem *item2;
-    QTableWidgetItem *item3;
-    QTableWidgetItem *item4;
-    QTableWidgetItem *item5;
-    item1 = new QTableWidgetItem;
-    item2 = new QTableWidgetItem;
-    item3 = new QTableWidgetItem;
-    item4 = new QTableWidgetItem;
-    item5 = new QTableWidgetItem;
-    table->setItem(row, 0, item1);
-    table->setItem(row, 1, item2);
-    table->setItem(row, 2, item3);
-    table->setItem(row, 3, item4);
-    table->setItem(row, 4, item5);
 }
 
 void AdminWindow::deleteRow(){

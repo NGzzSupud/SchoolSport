@@ -232,11 +232,6 @@
      <string>1</string>
     </property>
    </item>
-   <item>
-    <property name="text">
-     <string>4</string>
-    </property>
-   </item>
   </widget>
   <widget class="QPushButton" name="pushButton_complete">
    <property name="geometry">

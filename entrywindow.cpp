@@ -24,12 +24,6 @@ Entrywindow::Entrywindow(QWidget *parent) :
         this->move ((QApplication::desktop()->width() - this->width())/2,(QApplication::desktop()->height() - this->height())/2.25);
 
 
-
-    //label_sports->setObjectName("label");
-    //label_gameName->setObjectName("label");
-    //ui->pushButton_submit->setObjectName("button");
-
-
     ui->tableWidget_game->setColumnCount(1);
     QStringList colLabels;
     colLabels << "Game";
@@ -49,8 +43,9 @@ Entrywindow::Entrywindow(QWidget *parent) :
 
     }
 
-    connect(ui->pushButton_submit,&QPushButton::clicked,this,&Entrywindow::submit);
+    connect(ui->pushButton_save,&QPushButton::clicked,this,&Entrywindow::save);
     connect(ui->tableWidget_game, &QTableWidget::clicked, this, &Entrywindow::addLineEdit);
+    connect(ui->pushButton_complete, &QPushButton::clicked, this, &Entrywindow::complete);
 
 
     for(int i=1;i<=database.games.size();i++)
@@ -80,10 +75,9 @@ Entrywindow::~Entrywindow()
  */
 void Entrywindow::addLineEdit()
 {
-    this->setFixedSize(460, 100 + sizeof(gamePlayer[ui->tableWidget_game->currentRow()])/sizeof(int) * 40);
+    //this->setFixedSize(460, 100 + sizeof(gamePlayer[ui->tableWidget_game->currentRow()])/sizeof(int) * 40);
     QList<QLabel*> labels = this->findChildren<QLabel*>("label");
     QList<QLineEdit*> lines = this->findChildren<QLineEdit*>("line");
-   // QList<QPushButton*> buttons = this->findChildren<QPushButton*>("button");
 
     foreach(QLineEdit*line, lines)
     {
@@ -97,18 +91,10 @@ void Entrywindow::addLineEdit()
         qDebug()<<label->objectName();
         delete label;
     }
-/*
-    foreach (QPushButton* button, buttons) {
-        button->setParent(0);
-        qDebug()<<button->objectName();
-        delete button;
-    }
-*/
 
     //ui->label_game->setText(database.games[table->currentRow()].name);
     for(int i=0; i<gamePlayerNum[ui->tableWidget_game->currentRow()]; i++){
-        //qDebug()<<j;
-        qDebug()<<"changed";
+        //qDebug()<<"changed";
         QLabel * label_name = new QLabel(this);
         label_name->setText(database.students[gamePlayer[ui->tableWidget_game->currentRow()][i] - 1].name);
         label_name->setAlignment(Qt::AlignCenter);
@@ -117,17 +103,17 @@ void Entrywindow::addLineEdit()
         //lineEdit->setText();
         lineEdit->setObjectName("line");
         ui->gridLayout_result->setRowStretch(i, 1);
-        ui->gridLayout_result->addWidget(label_name, i+1, 1);
-        ui->gridLayout_result->addWidget(lineEdit, i+1, 3);
+        ui->gridLayout_result->addWidget(label_name, i, 1, 1, 2);
+        ui->gridLayout_result->addWidget(lineEdit, i, 4, 1, 1);
     }
-    qDebug()<<"changed";
+    //qDebug()<<"changed";
 
 }
 
 /*
  *  Submit and save the result.
  */
-void Entrywindow::submit()
+void Entrywindow::save()
 {
     QList<QLineEdit*> lines = this->findChildren<QLineEdit*>("line");
 

@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
             student.college_id = str.section("|", 2, 2).toInt(&ok, 10);
             student.gameCount_f = str.section("|", 3, 3).toInt(&ok, 10);
             student.gameCount_t = str.section("|", 4, 4).toInt(&ok, 10);
-            student.haveTeam = str.section("|", 5, 5).toInt(&ok, 10);
+            //student.haveTeam = str.section("|", 5, 5).toInt(&ok, 10);
             database.students.push_back(student);
         }
     }

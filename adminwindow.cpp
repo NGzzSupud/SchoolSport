@@ -6,6 +6,7 @@
 #include <QSettings>
 #include <QDesktopWidget>
 #include <QDialog>
+#include <QFile>
 #include <QGridLayout>
 #include <QTableWidget>
 #include "dataprocess.h"
@@ -46,11 +47,6 @@ AdminWindow::~AdminWindow()
 }
 
 void AdminWindow::changeCurrent(){
-    //QString configFilePath = "config.ini";
-    //QSettings settings(configFilePath,QSettings::IniFormat);
-    //settings.setValue("Game/Current", "2");
-    //adminWin_2.show();
-    //this->close();
 
     bool ok;
     for(int i=1; i<=database.games.size(); i++){
@@ -73,7 +69,70 @@ void AdminWindow::changeCurrent(){
     {
         celHaveSport(sportTime[struct_people[i].sport_one], sportTime[struct_people[i].sport_two], struct_people[i].sport_one, struct_people[i].sport_two);
     }
-qDebug()<<"jjj";
+    //qDebug()<<"jjj";
+
+    int finall_beginTime[20];
+    int finall_endTime[20];
+    for(int i=0; i<5; i++){
+        for(int j=0; j<5; j++){
+            for(int k=0; k<300; k++){
+                if(sM[i][j][k] != 0){
+                    int f_flag = sM[i][j][k];
+                    finall_beginTime[f_flag] = j*1000 + k;
+                    for(int z=k; z<300; z++){
+                        if(sM[i][j][z] != f_flag){
+                            finall_endTime[f_flag] = j*1000 + z;
+                        }
+                    }
+                }
+            }
+        }
+    }
+        //int day = finall_beginTime[5] /1000;
+        //int time = finall_beginTime[5] % 1000;
+/*
+    int shunxu[20] = {0};
+    QVector<Game> games;
+    Game game;
+    for(int i=0; i<20; i++){
+        if(trueXiangmu[i] != 0){
+            int index = trueXiangmu[i];
+            game.id = index;
+            game.name = database.games[index - 1].name;
+            game.duration = database.games[index - 1].duration;
+            game.date = finall_beginTime[index] / 1000;
+            game.number = database.games[index - 1].number;
+            game.place = database.games[index -1].place;
+            game.time = finall_beginTime[index] % 1000;
+            game.type = database.games[index - 1].type;
+            games.push_back(game);
+        }
+    }
+
+    database.games.clear();
+
+    for(int i=1; i<=games.size(); i++){
+        game.id = i;
+        game.name = database.games[i - 1].name;
+        game.duration = database.games[i - 1].duration;
+        game.date = database.games[i -1].date;
+        game.number = database.games[i - 1].number;
+        game.place = database.games[i -1].place;
+        game.time = database.games[i -1].time;
+        game.type = database.games[i - 1].type;
+        database.games.push_back(game);
+    }
+
+    DataProcess::saveGame();
+
+*/
+
+    //Jump to next window
+    //QString configFilePath = "config.ini";
+    //QSettings settings(configFilePath,QSettings::IniFormat);
+    //settings.setValue("Game/Current", "2");
+    adminWin_2.show();
+    //this->close();
 }
 
 void AdminWindow::releaseGame(){
@@ -178,7 +237,10 @@ void AdminWindow::searchWindow(){
         item3->setText(QString::number(database.games[i].duration));
         item3->setTextAlignment(Qt::AlignCenter);
         table->setItem(i, 2, item3);
-        item4->setText(database.games[i].place);
+        QString configFilePath = "config.ini";
+        QSettings settings(configFilePath,QSettings::IniFormat);
+        QString place = settings.value("Place/" + database.games[i].place).toString();
+        item4->setText(place);
         item4->setTextAlignment(Qt::AlignCenter);
         table->setItem(i, 3, item4);
         item5->setText(QString::number(database.games[i].number));
@@ -192,6 +254,7 @@ void AdminWindow::searchWindow(){
     table->horizontalHeader()->setStretchLastSection(true);
     table->setSelectionBehavior(QAbstractItemView::SelectRows);
     table->setAlternatingRowColors(true);
+    table->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     gridlayout->setColumnStretch(0,0);
     gridlayout->addWidget(table,0,0,1,5);
@@ -237,7 +300,10 @@ void AdminWindow::saveGame(){
              game.type = table->item(i, 0)->text().toInt(&ok,10);
              game.name = table->item(i, 1)->text();
              game.duration = table->item(i, 2)->text().toInt(&ok,10);
-             game.place = table->item(i, 3)->text();
+             QString configFilePath = "config.ini";
+             QSettings settings(configFilePath,QSettings::IniFormat);
+             QString place = settings.value("Place/" + table->item(i, 3)->text()).toString();
+             game.place = place;
              game.number = table->item(i, 4)->text().toInt(&ok,10);
              database.games.push_back(game);
          }

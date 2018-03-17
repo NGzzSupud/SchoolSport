@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>474</width>
-    <height>356</height>
+    <width>470</width>
+    <height>530</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,36 +16,62 @@
   <widget class="QWidget" name="gridLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>142</x>
+     <x>172</x>
      <y>20</y>
-     <width>311</width>
-     <height>271</height>
+     <width>261</width>
+     <height>431</height>
     </rect>
    </property>
-   <layout class="QGridLayout" name="gridLayout_result"/>
+   <layout class="QGridLayout" name="gridLayout_result">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetMinimumSize</enum>
+    </property>
+    <property name="horizontalSpacing">
+     <number>7</number>
+    </property>
+    <property name="verticalSpacing">
+     <number>15</number>
+    </property>
+   </layout>
   </widget>
   <widget class="QTableWidget" name="tableWidget_game">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>30</x>
      <y>20</y>
-     <width>121</width>
-     <height>311</height>
+     <width>120</width>
+     <height>480</height>
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_submit">
+  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>360</x>
-     <y>300</y>
-     <width>93</width>
-     <height>28</height>
+     <x>180</x>
+     <y>470</y>
+     <width>231</width>
+     <height>30</height>
     </rect>
    </property>
-   <property name="text">
-    <string>submit</string>
-   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="spacing">
+     <number>50</number>
+    </property>
+    <item>
+     <widget class="QPushButton" name="pushButton_save">
+      <property name="text">
+       <string>Save</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_complete">
+      <property name="text">
+       <string>Complete</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>

@@ -32,7 +32,7 @@ struct Student
     QString name;
     int gameCount_f;
     int gameCount_t;
-    int haveTeam;
+    //int haveTeam;
 };
 /*
 struct Team

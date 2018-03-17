@@ -12,6 +12,7 @@
 #include <QDesktopWidget>
 #include <QFile>
 #include <QDebug>
+#include <QSettings>
 #include "dataprocess.h"
 extern DataProcess database;
 
@@ -102,7 +103,10 @@ void NormalWindow::displaySports()
         item1->setText(database.games[i].name);
         item1->setTextAlignment(Qt::AlignCenter);
         table->setItem(i, 0, item1);
-        item2->setText(database.games[i].place);
+        QString configFilePath = "config.ini";
+        QSettings settings(configFilePath,QSettings::IniFormat);
+        QString place = settings.value("Place/" + database.games[i].place).toString();
+        item2->setText(place);
         item2->setTextAlignment(Qt::AlignCenter);
         table->setItem(i, 1, item2);
         if(database.games[i].type == 1){
@@ -220,103 +224,71 @@ void NormalWindow::addLineEdit()
 
 void NormalWindow::submit()
 {
-
-
-
-    /*
     QList<QLineEdit*> lines = this->findChildren<QLineEdit*>("line");
-    //qDebug()<<"size:"<<lines.size();
     bool emptyFlag = true;
-    for(int i=0; i<lines.size(); i++){
-        if(lines[i]->text().isEmpty()){
-            QMessageBox::about(this, tr("Tips"), "LineEdit:" + QString::number(i + 1) + " is empty.");
-            emptyFlag = false;
-            break;
-        }
+    if(lines[0]->text().isEmpty()){
+        QMessageBox::about(this, tr("Tips"), "Input can not be empty.");
+        emptyFlag = false;
     }
     if(emptyFlag){
+        Student student;
+        int index = 0;
+        if(DataProcess::studentIsExist(lines[0]->text()) == -1){
+            student.id = database.students.size() + 1;
+            student.name = lines[0]->text();
+            student.college_id = college;
+            student.gameCount_f = 0;
+            student.gameCount_t = 0;
+            //student.haveTeam = 0;
+            database.students.push_back(student);
+            index = student.id;
+            Signup signup;
+            signup.id = database.signups.size() + 1;
+            signup.student_id = index;
+            signup.game_id = table->currentRow() + 1;
+            database.signups.push_back(signup);
+        }else {
+            index = DataProcess::studentIsExist(lines[0]->text());
 
-        int outfor = 0;
-        if(database.games[table->currentRow()].number == 4){
-            for(int i=0; i<4; i++){
-                for(int j=0; j<4; j++){
-                    if(i == j){
-                        continue;
-                    }else {
-                        if(!lines[i]->text().compare(lines[j]->text())){
-                            QMessageBox::about(this, tr("Tips"), "The name can't be same.");
-                            outfor = 1;
+            if(!(database.games[table->currentRow()].type == 1 && database.students[index - 1].gameCount_f == TAMOSI_LIMITED)){
+                if(!(database.games[table->currentRow()].type == 2 && database.students[index - 1].gameCount_t == TRACK_LIMITED)){
+                    bool flag = true;
+                    for(int i=1; i<=database.signups.size(); i++){
+                        qDebug()<<"index:"<<index;
+                        if(database.signups[i - 1].student_id == index && database.signups[i - 1].game_id == table->currentRow() + 1){
+                            qDebug()<<"test if";
+                            QMessageBox::about(this, tr("Tips"), database.students[index - 1].name + " has signed up this game.");
+                            flag = false;
                             break;
                         }
                     }
-                }
-                if (outfor == 1) break;
-            }
-
-            if(!outfor){
-                Student student;
-                for(int i=0;i<4;i++){
-                    int index = 0;
-                    int team = 0;
-                    if(DataProcess::studentIsExist(lines[i]->text()) == -1){
-                        student.id = database.students.size() + 1;
-                        student.name = lines[i]->text();
-                        student.college_id = college;
-                        student.gameCount_f = 0;
-                        student.gameCount_t = 0;
-                        student.haveTeam = 0;
-                        database.students.push_back(student);
-                        index = student.id;
-                    }else {
-                        index = DataProcess::studentIsExist(lines[i]->text());
-                        if(database.students[index - 1].haveTeam != 0){
-                            qDebug()<<index;
-                            QMessageBox::about(this, tr("Tips"), database.students[index - 1].name + " already have a team.");
-                            break;
+                    if(flag){
+                        Signup signup;
+                        signup.id = database.signups.size() + 1;
+                        signup.student_id = index;
+                        signup.game_id = table->currentRow() + 1;
+                        database.signups.push_back(signup);
+                        if(database.games[signup.game_id - 1].type == 1){
+                            database.students[index - 1].gameCount_f ++;
                         }else {
-                            if(!(database.games[table->currentRow()].type == 1 && database.students[index].gameCount_f == TAMOSI_LIMITED)){
-                                if(!(database.games[table->currentRow()].type == 2 && database.students[index].gameCount_t == TRACK_LIMITED)){
-                                    bool flag = true;
-                                    for(int i=1; i<=database.signups.size(); i++){
-                                        //qDebug()<<"test";
-                                        if(database.signups[i - 1].team_id == team && database.signups[i - 1].game_id == table->currentRow()){
-                                            //qDebug()<<"test";
-                                            QMessageBox::about(this, tr("Tips"), database.students[index - 1].name + " has signed up this game.");
-                                            flag = false;
-                                            break;
-                                        }
-                                    }
-                                    if(flag){
-                                        Signup signup;
-                                        signup.team_id = team;
-                                        signup.game_id = table->currentRow();
-                                        database.signups.push_back(signup);
-                                        if(database.games[signup.game_id].type == 1){
-                                            database.students[index].gameCount_f ++;
-                                        }else {
-                                            database.students[index].gameCount_t ++;
-                                        }
-                                        //qDebug()<<"insert successfully";
-                                    }
-
-                                }else {
-                                    QMessageBox::about(this, tr("Tips"), database.students[index].name + " has already signed up a track game.");
-                                    break;
-                                }
-                            }else {
-                                QMessageBox::about(this, tr("Tips"), database.students[index].name + " has already signed up a tamosi.");
-                                break;
-                            }
-
-
+                            database.students[index - 1].gameCount_t ++;
                         }
+                        qDebug()<<"insert successfully";
                     }
+
+                }else {
+                    QMessageBox::about(this, tr("Tips"), database.students[index - 1].name + " has already signed up a track game.");
                 }
+            }else {
+                QMessageBox::about(this, tr("Tips"), database.students[index - 1].name + " has already signed up a tamosi.");
             }
+
         }
 
+        DataProcess::saveStudent();
+        DataProcess::saveSignup();
+
     }
-    */
 
 }
 

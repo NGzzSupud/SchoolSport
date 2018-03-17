@@ -59,8 +59,8 @@ void DataProcess::saveStudent()
         for(int i=0; i < database.students.size(); i ++){
             QString str = QString::number(database.students[i].id) + "|" + database.students[i].name + "|" + QString::number(database.students[i].college_id)+ "|"
                     + QString::number(database.students[i].gameCount_f) + "|"
-                    + QString::number(database.students[i].gameCount_t) + "|"
-                    + QString::number(database.students[i].haveTeam) + "|";
+                    + QString::number(database.students[i].gameCount_t) + "|";
+                    //+ QString::number(database.students[i].haveTeam) + "|";
             QTextStream in(&fileStudent);
             in<<str<<"\n";
         }

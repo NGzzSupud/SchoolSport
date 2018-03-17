@@ -22,7 +22,7 @@ public:
 
 private slots:
     void addLineEdit();
-    void submit();
+    void save();
     void complete();
 
 

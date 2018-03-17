@@ -71,23 +71,29 @@ void AdminWindow::changeCurrent(){
     }
     //qDebug()<<"jjj";
 
-    int finall_beginTime[20];
-    int finall_endTime[20];
+    int finall_beginTime[5][20];
+    int finall_endTime[5][20];
+	int finall_placeAndSport[5][20];
     for(int i=0; i<5; i++){
+		int time_flag = 1;
         for(int j=0; j<5; j++){
             for(int k=0; k<300; k++){
                 if(sM[i][j][k] != 0){
                     int f_flag = sM[i][j][k];
-                    finall_beginTime[f_flag] = j*1000 + k;
+                    finall_beginTime[i][f_flag] = j*1000 + k;
+					finall_placeAndSport[i][time_flag] = f_flag;
+					time_flag++;
                     for(int z=k; z<300; z++){
                         if(sM[i][j][z] != f_flag){
-                            finall_endTime[f_flag] = j*1000 + z;
+                            finall_endTime[i][f_flag] = j*1000 + z;
+							break;
                         }
                     }
                 }
             }
         }
     }
+
         //int day = finall_beginTime[5] /1000;
         //int time = finall_beginTime[5] % 1000;
 /*

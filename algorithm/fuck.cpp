@@ -6,6 +6,25 @@
 using namespace std;
 #include"fuck.h"
 
+extern int sportPlace[20];
+extern int sM[5][5][300];// placeAndSport[地点][日子][时间] = 运动名称
+extern int sportTime[20]; // sportTime[比赛] = 时间
+
+//int xiangmuTime[20]; //xiangmu[项目] = 时间
+extern int xiangmu[20]; //项目人数统计 xiangmu[比赛项目] = 报名人数
+extern int trueXiangmu[20];  //trueXiangmu[顺序] = 比赛项目
+extern int deleteXiangmu[20];
+extern People struct_people[300];
+
+int sportPlace[20];
+int sM[5][5][300];// placeAndSport[地点][日子][时间] = 运动名称
+int sportTime[20]; // sportTime[比赛] = 时间
+
+//int xiangmuTime[20]; //xiangmu[项目] = 时间
+int xiangmu[20]; //项目人数统计 xiangmu[比赛项目] = 报名人数
+int trueXiangmu[20];  //trueXiangmu[顺序] = 比赛项目
+int deleteXiangmu[20];
+People struct_people[300];
 
 // 地点  1 -- 跑道  2 -- 沙地 3 -- 操场
 

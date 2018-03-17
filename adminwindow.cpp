@@ -11,6 +11,7 @@
 #include "dataprocess.h"
 #include <QString>
 #include "loginwindow.h"
+#include "algorithm/fuck.h"
 extern DataProcess database;
 
 AdminWindow::AdminWindow(QWidget *parent) :
@@ -24,7 +25,7 @@ AdminWindow::AdminWindow(QWidget *parent) :
     connect(ui->pushButton_release,&QPushButton::clicked,this,&AdminWindow::releaseGame);
     connect(ui->pushButton_search,&QPushButton::clicked,this,&AdminWindow::searchWindow);
     connect(ui->pushButton_complete,&QPushButton::clicked,this,&AdminWindow::changeCurrent);
-    ui->lineEdit_duration->setValidator(new QIntValidator(0,300,this));  //限制输入为300以下
+    ui->lineEdit_duration->setValidator(new QIntValidator(0,300,this));
 }
 
 
@@ -34,11 +35,30 @@ AdminWindow::~AdminWindow()
 }
 
 void AdminWindow::changeCurrent(){
-    QString configFilePath = "config.ini";
-    QSettings settings(configFilePath,QSettings::IniFormat);
-    settings.setValue("Game/Current", "2");
-    adminWin_2.show();
-    this->close();
+    //QString configFilePath = "config.ini";
+    //QSettings settings(configFilePath,QSettings::IniFormat);
+    //settings.setValue("Game/Current", "2");
+    //adminWin_2.show();
+    //this->close();
+
+    bool ok;
+    for(int i=1; i<=database.games.size(); i++){
+        sportPlace[i] = database.games[i-1].place.toInt(&ok, 10);
+        sportTime[i] = database.games[i-1].duration;
+    }
+
+    for(int i=1; i<database.signups.size(); i++){
+        if(database.games[database.signups[i].game_id].type == 1){
+            struct_people[database.signups[i].student_id].sport_one = database.signups[i].game_id;
+        }else {
+            struct_people[database.signups[i].student_id].sport_two = database.signups[i].game_id;
+        }
+    }
+    cel();
+    for(int i = 0;i<299;i++)
+    {
+        celHaveSport(placeTime[struct_people[i].sport_one], placeTime[struct_people[i].sport_two], struct_people[i].sport_one, struct_people[i].sport_two);
+    }
 }
 
 void AdminWindow::releaseGame(){

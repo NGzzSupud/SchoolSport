@@ -9,61 +9,22 @@ using namespace std;
 
 // 地点  1 -- 跑道  2 -- 沙地 3 -- 操场
 
-int sportPlace[20];
-int placeAndSport[5][5][300];// placeAndSport[地点][日子][时间] = 运动名称
-int sportTime[20]; // sportTime[比赛] = 时间
-
-//int xiangmuTime[20]; //xiangmu[项目] = 时间
-int trueXiangmu[20];  //trueXiangmu[顺序] = 比赛项目
-int deleteXiangmu[20];
-struct PlaygroundControl
-{
-	int place[4][4]; //place[日期][顺序] = 项目
-	int time;  //这些地方能用的时间
-};
-
-
-
-struct People
-{
-	int sport[2] = {0}; //参加的比赛[2] = 比赛
-	//int place[4] = {0}; //比赛对应的地点
-	//int sportTime[4] = {0}; //比赛对应的时间
-	//int BTime[4] = {0}; // [项目] = 时间
-	//int ETime[4] = {0};
-};
-struct Sport
-{
-	int sport;
-	int sportTime;
-	int sportPlace;
-}sportThing[20];
-
-
-//int paodao[4][4];// 跑道[日期][顺序] = 比赛项目
-//int caochang[4][4]; //操场[日期][顺序] = 比赛项目
-//int shadi[4][4];//沙地[日期][顺序] = 比赛项目
-
-#define peopleNumber 30
-const int day = 4;
-const int placeNumber = 5;
-const int placeTime = 300;
-const int placeDay = 4;
-
 //预处理 判断参赛人数够不够
 void cel()
 {
-	int xiangmu[20]; //项目人数统计 xiangmu[比赛项目] = 报名人数
+
 	memset(xiangmu, 0, sizeof(0));
-	People people[peopleNumber];
+    //People people[peopleNumber];
 	for(int j = 0;j<peopleNumber;j++)
-	for (int i = 0; i < 3; i++)
-	{
-		if (people[j].sport[i]!=0)
+    {if (struct_people[j].sport_one!=0)
 		{
-			xiangmu[people[j].sport[i]] ++;
+            xiangmu[struct_people[j].sport_one] ++;
 		}
-	}
+     if (struct_people[j].sport_two!=0)
+         {
+             xiangmu[struct_people[j].sport_two] ++;
+         }
+    }
 	int trueFlag = 0;
 	int deleFlag = 0;
 	for (int i = 0; i < 20; i++)  //处理掉不比赛的项目 得到trueXiangmu；
@@ -85,10 +46,14 @@ void cel()
 		{
 			for (int j1 = 0; j1 < deleFlag; j1++)
 			{
-				if (people[i].sport[j] == deleteXiangmu[deleFlag])
+                if (struct_people[i].sport_one == deleteXiangmu[deleFlag])
 				{
-					people[i].sport[j] = 0;
+                    struct_people[i].sport_one = 0;
 				}
+                if (struct_people[i].sport_two == deleteXiangmu[deleFlag])
+                {
+                    struct_people[i].sport_two = 0;
+                }
 			}
 		}
 
@@ -110,7 +75,7 @@ void cel()
 
 
 // 判断 插入 比赛
-void celHaveSport(int sM[][placeDay][placeTime], int _sportonetime,int _sporttwotime,int _sportone,int _sporttwo,int sportPlace[])
+void celHaveSport(int _sportonetime,int _sporttwotime,int _sportone,int _sporttwo)
 {
 	int oneflag = 0;
 	int twoflag = 0;

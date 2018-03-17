@@ -114,7 +114,7 @@ void Entrywindow::addLineEdit()
         label_name->setAlignment(Qt::AlignCenter);
         label_name->setObjectName("label");
         QLineEdit * lineEdit = new QLineEdit(this);
-        //lineEdit->setText();输出上次输入成绩
+        //lineEdit->setText();
         lineEdit->setObjectName("line");
         ui->gridLayout_result->setRowStretch(i, 1);
         ui->gridLayout_result->addWidget(label_name, i+1, 1);
@@ -125,8 +125,30 @@ void Entrywindow::addLineEdit()
 }
 
 /*
- *  Submit and save the sign up infomation.
+ *  Submit and save the result.
  */
-void Entrywindow::submit(){
+void Entrywindow::submit()
+{
+    QList<QLineEdit*> lines = this->findChildren<QLineEdit*>("line");
+
+    for(int i=0; i<lines.size(); i++){
+        Result result;
+        result.id = database.results.size() + 1;
+        result.game_id = ui->tableWidget_game->currentRow() + 1;
+        result.student_id = gamePlayer[ui->tableWidget_game->currentRow()][i];
+        result.result = lines[i]->text();
+        database.results.push_back(result);
+    }
+
+    DataProcess::saveResult();
+
+}
+
+
+/*
+ *  Complete the game and calculate the result.
+ */
+void Entrywindow::complete()
+{
 
 }

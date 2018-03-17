@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     QFile fileCollege("College.txt");
     QFile fileGame("Game.txt");
     QFile fileStudent("Student.txt");
-    QFile fileTeam("Team.txt");
+    //QFile fileTeam("Team.txt");
     QFile fileSignup("Signup.txt");
     QFile fileResult("Result.txt");
     if(!fileCollege.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -34,9 +34,11 @@ int main(int argc, char *argv[])
     if(!fileStudent.open(QIODevice::ReadOnly | QIODevice::Text)) {
            qDebug()<<"Can't open the student file!";
     }
+    /*
     if(!fileTeam.open(QIODevice::ReadOnly | QIODevice::Text)) {
            qDebug()<<"Can't open the team file!";
     }
+    */
     if(!fileSignup.open(QIODevice::ReadOnly | QIODevice::Text)) {
            qDebug()<<"Can't open the singup file!";
     }
@@ -97,7 +99,7 @@ int main(int argc, char *argv[])
         }
     }
     qDebug()<<"Read file student successfully.";
-
+/*
     Team team;
     while(!fileTeam.atEnd()){
         QByteArray line = fileTeam.readLine();
@@ -114,7 +116,7 @@ int main(int argc, char *argv[])
         }
     }
     qDebug()<<"Read file team successfully.";
-
+*/
     Signup signup;
     while(!fileSignup.atEnd()){
         QByteArray line = fileSignup.readLine();
@@ -123,7 +125,7 @@ int main(int argc, char *argv[])
         if(str != "\n"){
             bool ok;
             signup.id = str.section("|", 0, 0).toInt(&ok, 10);
-            signup.team_id = str.section("|", 1, 1).toInt(&ok, 10);
+            signup.student_id = str.section("|", 1, 1).toInt(&ok, 10);
             signup.game_id = str.section("|", 2, 2).toInt(&ok, 10);
             database.signups.push_back(signup);
             /*
@@ -155,7 +157,7 @@ int main(int argc, char *argv[])
             bool ok;
             result.id = str.section("|", 0, 0).toInt(&ok, 10);
             result.game_id = str.section("|", 1, 1).toInt(&ok, 10);
-            result.team_id = str.section("|", 2, 2).toInt(&ok, 10);
+            result.student_id = str.section("|", 2, 2).toInt(&ok, 10);
             result.result = str.section("|", 3, 3);
 
             database.results.push_back(result);
@@ -167,14 +169,14 @@ int main(int argc, char *argv[])
     fileCollege.close();
     fileGame.close();
     fileStudent.close();
-    fileTeam.close();
+    //fileTeam.close();
     fileSignup.close();
     fileResult.close();
 
     qDebug()<<"Size of colleges:"<<database.colleges.size();
     qDebug()<<"Size of games:"<<database.games.size();
     qDebug()<<"Size of students:"<<database.students.size();
-    qDebug()<<"Size of teams:"<<database.teams.size();
+    //qDebug()<<"Size of teams:"<<database.teams.size();
     qDebug()<<"Size of signups:"<<database.signups.size();
     qDebug()<<"Size of results:"<<database.results.size();
 

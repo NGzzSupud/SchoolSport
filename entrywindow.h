@@ -2,6 +2,11 @@
 #define ENTRYWINDOW_H
 
 #include <QDialog>
+#include <QTableWidget>
+#include <QGridLayout>
+#include <QLabel>
+#include <QPushButton>
+#include "dataprocess.h"
 
 namespace Ui {
 class Entrywindow;
@@ -12,8 +17,13 @@ class Entrywindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit Entrywindow(QWidget *parent = 0);
+    explicit Entrywindow(QWidget *parent = nullptr);
     ~Entrywindow();
+
+private slots:
+    void addLineEdit();
+    //void submit();
+
 
 private:
     Ui::Entrywindow *ui;

@@ -29,17 +29,20 @@ SOURCES += \
     loginwindow.cpp \
     adminwindow.cpp \
     normalwindow.cpp \
-    dataprocess.cpp
+    dataprocess.cpp \
+    entrywindow.cpp
 
 HEADERS += \
         mainwindow.h \
     loginwindow.h \
     adminwindow.h \
     normalwindow.h \
-    dataprocess.h
+    dataprocess.h \
+    entrywindow.h
 
 FORMS += \
         mainwindow.ui \
     loginwindow.ui \
     adminwindow.ui \
-    normalwindow.ui
+    normalwindow.ui \
+    entrywindow.ui

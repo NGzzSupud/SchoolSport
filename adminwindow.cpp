@@ -55,9 +55,10 @@ void AdminWindow::changeCurrent(){
         }
     }
     cel();
-    for(int i = 0;i<299;i++)
+    for(int j= 0;j<299;j++)
     {
-        celHaveSport(placeTime[struct_people[i].sport_one], placeTime[struct_people[i].sport_two], struct_people[i].sport_one, struct_people[i].sport_two);
+        int temp = j;
+        celHaveSport(sportTime[struct_people[temp].sport_one], sportTime[struct_people[temp].sport_two], struct_people[temp].sport_one, struct_people[j].sport_two);
     }
 }
 

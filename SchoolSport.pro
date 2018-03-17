@@ -30,7 +30,15 @@ SOURCES += \
     adminwindow.cpp \
     normalwindow.cpp \
     dataprocess.cpp \
-    entrywindow.cpp
+    entrywindow.cpp \
+    algorithm/fuck.cpp \
+    adminwindow.cpp \
+    dataprocess.cpp \
+    entrywindow.cpp \
+    loginwindow.cpp \
+    main.cpp \
+    mainwindow.cpp \
+    normalwindow.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -38,7 +46,14 @@ HEADERS += \
     adminwindow.h \
     normalwindow.h \
     dataprocess.h \
-    entrywindow.h
+    entrywindow.h \
+    algorithm/fuck.h \
+    adminwindow.h \
+    dataprocess.h \
+    entrywindow.h \
+    loginwindow.h \
+    mainwindow.h \
+    normalwindow.h
 
 FORMS += \
         mainwindow.ui \

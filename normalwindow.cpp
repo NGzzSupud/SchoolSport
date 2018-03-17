@@ -175,7 +175,8 @@ void NormalWindow::addLineEdit()
     }
 
     //ui->label_game->setText(database.games[table->currentRow()].name);
-    for(int i=0; i<database.games[table->currentRow()].number; i++){
+    //qDebug() << table->currentRow();
+        for(int i=0; i<database.games[table->currentRow()].number; i++){
         QLabel * label_name = new QLabel(this);
         label_name->setText("Name:");
         label_name->setAlignment(Qt::AlignCenter);

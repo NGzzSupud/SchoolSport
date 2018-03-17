@@ -24,6 +24,7 @@ AdminWindow::AdminWindow(QWidget *parent) :
     connect(ui->pushButton_release,&QPushButton::clicked,this,&AdminWindow::releaseGame);
     connect(ui->pushButton_search,&QPushButton::clicked,this,&AdminWindow::searchWindow);
     connect(ui->pushButton_complete,&QPushButton::clicked,this,&AdminWindow::changeCurrent);
+    ui->lineEdit_duration->setValidator(new QIntValidator(0,300,this));  //限制输入为300以下
 }
 
 

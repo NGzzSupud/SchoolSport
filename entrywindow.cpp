@@ -75,9 +75,6 @@ Entrywindow::Entrywindow(QWidget *parent) :
     }
     //connect(ui->pushButton_submit,&QPushButton::clicked,this,&Entrywindow::submit);
     connect(ui->tableWidget_game, &QTableWidget::clicked, this, &Entrywindow::addLineEdit);
-
-
-
 }
 
 Entrywindow::~Entrywindow()

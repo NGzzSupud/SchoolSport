@@ -84,7 +84,7 @@ Entrywindow::Entrywindow(QWidget *parent) :
         gamePlayerNum[i]=0;
         for(int j=0;j<database.signups.size();j++){
             if(database.signups[j].game_id==i){   qDebug()<<"1";
-                gamePlayer[i][gamePlayerNum[i]]=database.signups[j].team_id;
+                gamePlayer[i][gamePlayerNum[i]]=database.signups[j].student_id;
                 gamePlayerNum[i]++;
                 //sizeof(gamePlayer[i])/sizeof(int);
             }
@@ -134,7 +134,7 @@ void Entrywindow::addLineEdit()
         //qDebug()<<j;
         qDebug()<<"changed";
         QLabel * label_name = new QLabel(this);
-        label_name->setText( database.students[database.teams[gamePlayer[ui->tableWidget_game->currentRow()][i]].student_id[0]].name);
+        label_name->setText(database.students[gamePlayer[ui->tableWidget_game->currentRow()][i] - 1].name);
         label_name->setAlignment(Qt::AlignCenter);
         label_name->setObjectName("label");
         QLineEdit * lineEdit = new QLineEdit(this);

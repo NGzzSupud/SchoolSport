@@ -4,20 +4,18 @@
 #include<string>
 #include<algorithm>
 using namespace std;
-#include"想当然排序法.h"
+#include"fuck.h"
 
 
 // 地点  1 -- 跑道  2 -- 沙地 3 -- 操场
 
 int sportPlace[20];
-int placeAndSport[5][5][160];// placeAndSport[地点][日子][时间] = 运动名称
-
-int xiangmu[20];  //项目人数统计 xiangmu[比赛项目] = 报名人数
-int trueXiangmu[20];  //trueXiangmu[顺序] = 比赛项目
-int deleteXiangmu[20];
-int xiangmuTime[20]; //xiangmu[项目] = 时间
+int placeAndSport[5][5][300];// placeAndSport[地点][日子][时间] = 运动名称
 int sportTime[20]; // sportTime[比赛] = 时间
 
+//int xiangmuTime[20]; //xiangmu[项目] = 时间
+int trueXiangmu[20];  //trueXiangmu[顺序] = 比赛项目
+int deleteXiangmu[20];
 struct PlaygroundControl
 {
 	int place[4][4]; //place[日期][顺序] = 项目
@@ -30,7 +28,7 @@ struct People
 {
 	int sport[2] = {0}; //参加的比赛[2] = 比赛
 	//int place[4] = {0}; //比赛对应的地点
-	int sportTime[4] = {0}; //比赛对应的时间
+	//int sportTime[4] = {0}; //比赛对应的时间
 	//int BTime[4] = {0}; // [项目] = 时间
 	//int ETime[4] = {0};
 };
@@ -55,7 +53,8 @@ const int placeDay = 4;
 //预处理 判断参赛人数够不够
 void cel()
 {
-	
+	int xiangmu[20]; //项目人数统计 xiangmu[比赛项目] = 报名人数
+	memset(xiangmu, 0, sizeof(0));
 	People people[peopleNumber];
 	for(int j = 0;j<peopleNumber;j++)
 	for (int i = 0; i < 3; i++)

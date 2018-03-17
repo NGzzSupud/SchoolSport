@@ -9,7 +9,7 @@ int DataProcess::studentIsExist(QString name)
 {
     for(int i=0; i<database.students.size(); i++){
         if(!database.students[i].name.compare(name)){
-            return i;
+            return i + 1;
         }
     }
     return -1;
@@ -67,7 +67,7 @@ void DataProcess::saveStudent()
         fileStudent.close();
     }
 }
-
+/*
 void DataProcess::saveTeam()
 {
     QFile fileTeam("Team.txt");
@@ -85,7 +85,7 @@ void DataProcess::saveTeam()
         fileTeam.close();
     }
 }
-
+*/
 
 void DataProcess::saveSignup()
 {
@@ -94,7 +94,7 @@ void DataProcess::saveSignup()
         qDebug()<<"Can't open the signup file!";
     }else {
         for(int i=0; i < database.signups.size(); i ++){
-            QString str = QString::number(database.signups[i].id) + "|" + QString::number(database.signups[i].team_id) + "|" + QString::number(database.signups[i].game_id)+ "|";
+            QString str = QString::number(database.signups[i].id) + "|" + QString::number(database.signups[i].student_id) + "|" + QString::number(database.signups[i].game_id)+ "|";
             QTextStream in(&fileSignup);
             in<<str<<"\n";
         }
@@ -109,7 +109,7 @@ void DataProcess::saveResult()
         qDebug()<<"Can't open the result file!";
     }else {
         for(int i=0; i < database.results.size(); i ++){
-            QString str = QString::number(database.results[i].id) + "|" + QString::number(database.results[i].team_id) + "|"
+            QString str = QString::number(database.results[i].id) + "|" + QString::number(database.results[i].student_id) + "|"
                     + QString::number(database.results[i].game_id)+ "|"
                     + database.results[i].result+ "|";
             QTextStream in(&fileResult);

@@ -1,11 +1,19 @@
 #pragma once
 //#include"sport.h"
 
+struct SortPlace
+{
+	int studentID;
+	double score;
+	
+};
+
+
  class Calculate
 {
 public:
-	double smallToBig(double arr[], int len);
-	double bigToSmall(double arr[], int len);
+	double toBig(SortPlace sortplace[], int len); //ÉýÐò
+	double toSmall(SortPlace sortplace[], int len); //½µÐò
 
 	//char smallToBig(char str[]);
 	//char bigToSmall(char str[]);

@@ -160,6 +160,7 @@ void MainWindow::saveCollege()
         //qDebug()<<database.colleges.size();
         College college;
         for(int i=0; i<table->rowCount(); i++){
+            college.id = i + 1;
             college.name = table->item(i, 0)->text();
             college.code = table->item(i, 1)->text();
             database.colleges.push_back(college);

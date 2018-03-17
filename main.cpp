@@ -50,8 +50,10 @@ int main(int argc, char *argv[])
         QString str(line);
         //qDebug()<<str;
         if(str != "\n"){
-            college.name = str.section("|", 0, 0);
-            college.code = str.section("|", 1, 1);
+            bool ok;
+            college.id = str.section("|", 0, 0).toInt(&ok, 10);
+            college.name = str.section("|", 1, 1);
+            college.code = str.section("|", 2, 2);
 
             database.colleges.push_back(college);
         }
@@ -65,14 +67,14 @@ int main(int argc, char *argv[])
         //qDebug()<<str;
         if(str != "\n"){
             bool ok;
-            game.name = str.section("|", 0, 0);
-            game.date = str.section("|", 1, 1).toInt(&ok, 10);
-            game.duration = str.section("|", 2, 2).toInt(&ok, 10);
-            //qDebug()<<game.duration;
-            game.time = QTime::fromString(str.section("|", 3, 3), "hh:mm");
-            game.place = str.section("|", 4, 4);
-            game.number = str.section("|", 5, 5).toInt(&ok, 10);
-            game.type = str.section("|", 6, 6).toInt(&ok, 10);
+            game.id = str.section("|", 0, 0).toInt(&ok, 10);
+            game.name = str.section("|", 1, 1);
+            game.date = str.section("|", 2, 2).toInt(&ok, 10);
+            game.duration = str.section("|", 3, 3).toInt(&ok, 10);
+            game.time = QTime::fromString(str.section("|", 4, 4), "hh:mm");
+            game.place = str.section("|", 5, 5);
+            game.number = str.section("|", 6, 6).toInt(&ok, 10);
+            game.type = str.section("|", 7, 7).toInt(&ok, 10);
             database.games.push_back(game);
         }
     }
@@ -85,11 +87,12 @@ int main(int argc, char *argv[])
         //qDebug()<<str;
         if(str != "\n"){
             bool ok;
-            student.name = str.section("|", 0, 0);
-            student.college_id = str.section("|", 1, 1).toInt(&ok, 10);
-            student.gameCount_f = 0;
-            student.gameCount_t = 0;
-            student.haveTeam = 0;
+            student.id = str.section("|", 0, 0).toInt(&ok, 10);
+            student.name = str.section("|", 1, 1);
+            student.college_id = str.section("|", 2, 2).toInt(&ok, 10);
+            student.gameCount_f = str.section("|", 3, 3).toInt(&ok, 10);
+            student.gameCount_t = str.section("|", 4, 4).toInt(&ok, 10);
+            student.haveTeam = str.section("|", 5, 5).toInt(&ok, 10);
             database.students.push_back(student);
         }
     }
@@ -102,9 +105,10 @@ int main(int argc, char *argv[])
         //qDebug()<<str;
         if(str != "\n"){
             bool ok;
-            team.number = str.section("|", 0, 0).toInt(&ok, 10);
+            team.id = str.section("|", 0, 0).toInt(&ok, 10);
+            team.number = str.section("|", 1, 1).toInt(&ok, 10);
             for(int i=0; i<team.number; i++){
-                team.student_id.push_back(str.section("|", i+1, i+1).toInt(&ok, 10));
+                team.student_id.push_back(str.section("|", i+2, i+2).toInt(&ok, 10));
             }
             database.teams.push_back(team);
         }
@@ -118,8 +122,9 @@ int main(int argc, char *argv[])
         //qDebug()<<str;
         if(str != "\n"){
             bool ok;
-            signup.team_id = str.section("|", 0, 0).toInt(&ok, 10);
-            signup.game_id = str.section("|", 1, 1).toInt(&ok, 10);
+            signup.id = str.section("|", 0, 0).toInt(&ok, 10);
+            signup.team_id = str.section("|", 1, 1).toInt(&ok, 10);
+            signup.game_id = str.section("|", 2, 2).toInt(&ok, 10);
             database.signups.push_back(signup);
             /*
             if(database.games[signup.game_id].type == 1){
@@ -148,9 +153,10 @@ int main(int argc, char *argv[])
         //qDebug()<<str;
         if(str != "\n"){
             bool ok;
-            result.game_id = str.section("|", 0, 0).toInt(&ok, 10);
-            result.team_id = str.section("|", 1, 1).toInt(&ok, 10);
-            result.result = str.section("|", 2, 2);
+            result.id = str.section("|", 0, 0).toInt(&ok, 10);
+            result.game_id = str.section("|", 1, 1).toInt(&ok, 10);
+            result.team_id = str.section("|", 2, 2).toInt(&ok, 10);
+            result.result = str.section("|", 3, 3);
 
             database.results.push_back(result);
         }
@@ -176,10 +182,6 @@ int main(int argc, char *argv[])
     LoginWindow loginWin;
     loginWin.show();
     loginWin.move ((QApplication::desktop()->width() - loginWin.width())/2,(QApplication::desktop()->height() - loginWin.height())/2);
-    //NormalWindow normalWin;
-    //normalWin.show();
 
-     //AdminWindow adminWin;
-     //adminWin.show();
     return a.exec();
 }

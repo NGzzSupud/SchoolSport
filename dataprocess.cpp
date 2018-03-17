@@ -22,7 +22,7 @@ void DataProcess::saveCollege()
         qDebug()<<"Can't open the college file!";
     }else {
         for(int i=0; i < database.colleges.size(); i ++){
-            QString str = database.colleges[i].name + "|" + database.colleges[i].code + "|";
+            QString str = QString::number(database.colleges[i].id) + "|" + database.colleges[i].name + "|" + database.colleges[i].code + "|";
             QTextStream in(&fileCollege);
             in<<str<<"\n";
         }
@@ -37,7 +37,7 @@ void DataProcess::saveGame()
         qDebug()<<"Can't open the game file!";
     }else {
         for(int i=0; i < database.games.size(); i ++){
-            QString str = database.games[i].name + "|" + QString::number(database.games[i].date)
+            QString str = QString::number(database.games[i].id) + "|" + database.games[i].name + "|" + QString::number(database.games[i].date)
                     + "|" + QString::number(database.games[i].duration)
                     + "|" + database.games[i].time.toString("hh:mm")
                     + "|" + database.games[i].place
@@ -57,7 +57,7 @@ void DataProcess::saveStudent()
         qDebug()<<"Can't open the student file!";
     }else {
         for(int i=0; i < database.students.size(); i ++){
-            QString str = database.students[i].name + "|" + QString::number(database.students[i].college_id)+ "|"
+            QString str = QString::number(database.students[i].id) + "|" + database.students[i].name + "|" + QString::number(database.students[i].college_id)+ "|"
                     + QString::number(database.students[i].gameCount_f) + "|"
                     + QString::number(database.students[i].gameCount_t) + "|"
                     + QString::number(database.students[i].haveTeam) + "|";
@@ -75,7 +75,7 @@ void DataProcess::saveTeam()
         qDebug()<<"Can't open the team file!";
     }else {
         for(int i=0; i < database.teams.size(); i ++){
-            QString str = QString::number(database.teams[i].number) + "|";
+            QString str = QString::number(database.teams[i].id) + "|" + QString::number(database.teams[i].number) + "|";
             for(int j=0; j<database.teams[i].number; j++){
                 str.append(database.teams[i].student_id[j] + "|");
             }
@@ -94,7 +94,7 @@ void DataProcess::saveSignup()
         qDebug()<<"Can't open the signup file!";
     }else {
         for(int i=0; i < database.signups.size(); i ++){
-            QString str = QString::number(database.signups[i].team_id) + "|" + QString::number(database.signups[i].game_id)+ "|";
+            QString str = QString::number(database.signups[i].id) + "|" + QString::number(database.signups[i].team_id) + "|" + QString::number(database.signups[i].game_id)+ "|";
             QTextStream in(&fileSignup);
             in<<str<<"\n";
         }
@@ -109,7 +109,7 @@ void DataProcess::saveResult()
         qDebug()<<"Can't open the result file!";
     }else {
         for(int i=0; i < database.results.size(); i ++){
-            QString str = QString::number(database.results[i].team_id) + "|"
+            QString str = QString::number(database.results[i].id) + "|" + QString::number(database.results[i].team_id) + "|"
                     + QString::number(database.results[i].game_id)+ "|"
                     + database.results[i].result+ "|";
             QTextStream in(&fileResult);

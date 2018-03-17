@@ -19,6 +19,7 @@ AdminWindow::AdminWindow(QWidget *parent) :
     ui->setupUi(this);
     this->move ((QApplication::desktop()->width() - this->width())/2,(QApplication::desktop()->height() - this->height())/2);
     this->setFixedSize(this->width(), this->height());
+
     connect(ui->pushButton_release,&QPushButton::clicked,this,&AdminWindow::releaseGame);
     connect(ui->pushButton_search,&QPushButton::clicked,this,&AdminWindow::searchWindow);
     connect(ui->pushButton_complete,&QPushButton::clicked,this,&AdminWindow::changeCurrent);
@@ -39,6 +40,7 @@ void AdminWindow::changeCurrent(){
 }
 
 void AdminWindow::releaseGame(){
+
     searchWindow();
     int row = table->rowCount();
     table->setRowCount(row);
@@ -58,7 +60,7 @@ void AdminWindow::releaseGame(){
     item5 = new QTableWidgetItem;
     QString input_name=ui->lineEdit_name->text();
     QString input_duration=ui->lineEdit_duration->text();
-    QString input_place=ui->lineEdit_place->text();
+    QString input_place=ui->comboBox_place->currentText();
     if(input_name.isEmpty() || input_duration.isEmpty() || input_place.isEmpty()){
        QMessageBox::about(this, tr("Tips"), tr("Input should not be empty."));
        searchWindow();
@@ -67,7 +69,7 @@ void AdminWindow::releaseGame(){
     item1->setText(ui->comboBox_type->currentText());
     item2->setText(ui->lineEdit_name->text());
     item3->setText(ui->lineEdit_duration->text());
-    item4->setText(ui->lineEdit_place->text());
+    item4->setText(ui->comboBox_place->currentText());
     item5->setText(ui->comboBox_number->currentText());
     table->setItem(row, 0, item1);
     table->setItem(row, 1, item2);
@@ -77,11 +79,11 @@ void AdminWindow::releaseGame(){
     QMessageBox message(QMessageBox::Warning,"Warning","Really to release?",QMessageBox::Yes|QMessageBox::No,NULL);
     if (message.exec()==QMessageBox::Yes)
     {
-       //qDebug()<<"clicked yes\n";
+        //qDebug()<<"clicked yes\n";
         saveGame();
         ui->lineEdit_duration->clear();
         ui->lineEdit_name->clear();
-        ui->lineEdit_place->clear();
+        ui->comboBox_place->setCurrentIndex(0);
         searchWindow();
     }
     else
@@ -194,6 +196,7 @@ void AdminWindow::saveGame(){
          Game game;
          bool ok;
          for(int i=0; i<table->rowCount(); i++){
+             game.id = i + 1;
              game.type = table->item(i, 0)->text().toInt(&ok,10);
              game.name = table->item(i, 1)->text();
              game.duration = table->item(i, 2)->text().toInt(&ok,10);

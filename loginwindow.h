@@ -29,6 +29,8 @@ private:
     NormalWindow normalWin;
     MainWindow beginWin;
     AdminWindow adminWin_1;
+
+
   //SignupWindow adminWin_2;
     int Current;
 };

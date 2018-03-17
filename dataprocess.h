@@ -8,6 +8,7 @@
 
 struct Game
 {
+    int id;
     QString name;
     int type;       //1 - Tamosi    2 - Track game
     int date;
@@ -19,12 +20,14 @@ struct Game
 
 struct College
 {
+    int id;
     QString name;
     QString code;
 };
 
 struct Student
 {
+    int id;
     int college_id;
     QString name;
     int gameCount_f;
@@ -34,18 +37,21 @@ struct Student
 
 struct Team
 {
+    int id;
     int number;
     QVector<int> student_id;
 };
 
 struct Signup
 {
+    int id;
     int team_id;
     int game_id;
 };
 
 struct Result
 {
+    int id;
     int game_id;
     int team_id;
     QString result;

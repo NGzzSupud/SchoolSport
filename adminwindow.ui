@@ -95,16 +95,6 @@
     <string>Place:</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_place">
-   <property name="geometry">
-    <rect>
-     <x>180</x>
-     <y>180</y>
-     <width>113</width>
-     <height>20</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QLineEdit" name="lineEdit_name">
    <property name="geometry">
     <rect>
@@ -144,7 +134,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>release</string>
+    <string>Release</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_duration">
@@ -167,7 +157,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>search</string>
+    <string>Search</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_number">
@@ -175,7 +165,7 @@
     <rect>
      <x>100</x>
      <y>220</y>
-     <width>54</width>
+     <width>60</width>
      <height>20</height>
     </rect>
    </property>
@@ -258,8 +248,33 @@
     </rect>
    </property>
    <property name="text">
-    <string>complete</string>
+    <string>Complete</string>
    </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox_place">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>180</y>
+     <width>111</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>Playground</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Track</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Sand Fileld</string>
+    </property>
+   </item>
   </widget>
  </widget>
  <resources/>

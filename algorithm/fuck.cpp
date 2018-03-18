@@ -61,20 +61,18 @@ void cel()
 		}
 	}
 	for (int i = 0; i < peopleNumber; i++)  //将删去的项目从运动员报名的项目中删除
-		for (int j = 0; j < 3; j++)
-		{
 			for (int j1 = 0; j1 < deleFlag; j1++)
 			{
-                if (struct_people[i].sport_one == deleteXiangmu[deleFlag])
+                if (struct_people[i].sport_one == deleteXiangmu[j1])
 				{
                     struct_people[i].sport_one = 0;
 				}
-                if (struct_people[i].sport_two == deleteXiangmu[deleFlag])
+                if (struct_people[i].sport_two == deleteXiangmu[j1])
                 {
                     struct_people[i].sport_two = 0;
                 }
 			}
-		}
+		
 
 	//int sportMatrix[placeNumber][placeDay][placeTime];
 	//int placeStopTimeFlag[placeNumber];

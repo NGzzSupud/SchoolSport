@@ -22,12 +22,13 @@ public:
 
 private slots:
     void addLineEdit();
-    void save();
     void complete();
-
-
+    void displayGames();
+    void submit();
 private:
     Ui::Entrywindow *ui;
+    QTableWidget *table;
+    QGridLayout *grid;
 };
 
 #endif // ENTRYWINDOW_H

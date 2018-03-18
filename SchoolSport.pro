@@ -38,7 +38,13 @@ SOURCES += \
     loginwindow.cpp \
     main.cpp \
     mainwindow.cpp \
-    normalwindow.cpp
+    normalwindow.cpp \
+    algorithm/attender.cpp \
+    algorithm/calSportThing.cpp \
+    algorithm/fuck.cpp \
+    algorithm/SportArithmetic.cpp \
+    algorithm/sportThing.cpp \
+    algorithm/TEXTMain.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -53,7 +59,13 @@ HEADERS += \
     entrywindow.h \
     loginwindow.h \
     mainwindow.h \
-    normalwindow.h
+    normalwindow.h \
+    algorithm/attender.h \
+    algorithm/calSportThing.h \
+    algorithm/fuck.h \
+    algorithm/SportArithmetic.h \
+    algorithm/sportThing.h \
+    algorithm/Top.h
 
 FORMS += \
         mainwindow.ui \

@@ -1,10 +1,11 @@
 #include"calSportThing.h"
 
-int CalSportThing::getTime(int t)
+void CalSportThing::setTime(int t)
 {
 	this->time = t;
+
 }
-int CalSportThing::getPlace(int p)
+void CalSportThing::setPlace(int p)
 {
 	this->place = p;
 }

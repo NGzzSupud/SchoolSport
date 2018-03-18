@@ -10,6 +10,7 @@
 #include <QFile>
 #include <QDebug>
 #include "dataprocess.h"
+#include "algorithm/SportArithmetic.h"
 extern DataProcess database;
 
 int gamePlayerNum[10],gamePlayer[10][10];

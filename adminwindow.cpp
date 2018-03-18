@@ -73,26 +73,51 @@ void AdminWindow::changeCurrent(){
 
     int finall_beginTime[5][20];
     int finall_endTime[5][20];
-	int finall_placeAndSport[5][20];
+	int finall_placeAndSport[5][20] = { 0 };
     for(int i=0; i<5; i++){
-		int time_flag = 1;
+		int time_flag = 0;
         for(int j=0; j<5; j++){
             for(int k=0; k<300; k++){
                 if(sM[i][j][k] != 0){
                     int f_flag = sM[i][j][k];
+					for (int z = k; z<300; z++) {
+						if (sM[i][j][z] != f_flag) {
+							finall_endTime[i][f_flag] = j * 1000 + z;
+							break;
+						}
+					}
                     finall_beginTime[i][f_flag] = j*1000 + k;
 					finall_placeAndSport[i][time_flag] = f_flag;
 					time_flag++;
-                    for(int z=k; z<300; z++){
-                        if(sM[i][j][z] != f_flag){
-                            finall_endTime[i][f_flag] = j*1000 + z;
-							break;
-                        }
-                    }
+					break;
                 }
             }
         }
     }
+
+
+    /*
+    QFile fileZhi("Zhixuce.txt");
+
+    if(!fileZhi.open(QIODevice::ReadWrite | QIODevice::Text)) {
+           qDebug()<<"Can't open the zhixuce file!";
+    }
+    while(!fileGame.atEnd()){
+        QByteArray line = fileGame.readLine();
+        QString str(line);
+        //qDebug()<<str;
+        if(str != "\n"){
+            bool ok;
+            for(int i=0; i<5; i++){
+                for(int j=0; j<5; j++){
+
+                }
+            }
+        }
+    }
+    qDebug()<<"Read file zhixuce successfully.";
+    */
+
 
         //int day = finall_beginTime[5] /1000;
         //int time = finall_beginTime[5] % 1000;

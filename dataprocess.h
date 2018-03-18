@@ -14,7 +14,7 @@ struct Game
     int date;
     int duration;
     QTime time;
-    QString place;
+    int place;
     int number;
 };
 
@@ -48,8 +48,9 @@ struct Signup
     //int team_id;
     int student_id;
     int game_id;
+	double result;
 };
-
+/*
 struct Result
 {
     int id;
@@ -58,7 +59,7 @@ struct Result
     int student_id;
     QString result;
 };
-
+*/
 class DataProcess
 {
 public:
@@ -66,7 +67,7 @@ public:
     QVector<Student> students;
     //QVector<Team> teams;
     QVector<Signup> signups;
-    QVector<Result> results;
+    //QVector<Result> results;
     QVector<College> colleges;
 
     static void saveCollege();
@@ -74,7 +75,7 @@ public:
     static void saveStudent();
     //static void saveTeam();
     static void saveSignup();
-    static void saveResult();
+    //static void saveResult();
     static int studentIsExist(QString name);
 
 private:

@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
     QFile fileStudent("Student.txt");
     //QFile fileTeam("Team.txt");
     QFile fileSignup("Signup.txt");
-    QFile fileResult("Result.txt");
+    //QFile fileResult("Result.txt");
     if(!fileCollege.open(QIODevice::ReadOnly | QIODevice::Text)) {
            qDebug()<<"Can't open the college file!";
     }
@@ -42,10 +42,11 @@ int main(int argc, char *argv[])
     if(!fileSignup.open(QIODevice::ReadOnly | QIODevice::Text)) {
            qDebug()<<"Can't open the singup file!";
     }
+	/*
     if(!fileResult.open(QIODevice::ReadOnly | QIODevice::Text)) {
            qDebug()<<"Can't open the result file!";
     }
-
+	*/
     College college;
     while(!fileCollege.atEnd()){
         QByteArray line = fileCollege.readLine();
@@ -74,7 +75,7 @@ int main(int argc, char *argv[])
             game.date = str.section("|", 2, 2).toInt(&ok, 10);
             game.duration = str.section("|", 3, 3).toInt(&ok, 10);
             game.time = QTime::fromString(str.section("|", 4, 4), "hh:mm");
-            game.place = str.section("|", 5, 5);
+            game.place = str.section("|", 5, 5).toInt(&ok, 10);
             game.number = str.section("|", 6, 6).toInt(&ok, 10);
             game.type = str.section("|", 7, 7).toInt(&ok, 10);
             database.games.push_back(game);
@@ -127,6 +128,7 @@ int main(int argc, char *argv[])
             signup.id = str.section("|", 0, 0).toInt(&ok, 10);
             signup.student_id = str.section("|", 1, 1).toInt(&ok, 10);
             signup.game_id = str.section("|", 2, 2).toInt(&ok, 10);
+			signup.result = str.section("|", 3, 3).toDouble(&ok);
             database.signups.push_back(signup);
             /*
             if(database.games[signup.game_id].type == 1){
@@ -147,7 +149,7 @@ int main(int argc, char *argv[])
     }
     DataProcess::saveStudent();
     qDebug()<<"Read file signup successfully.";
-
+	/*
     Result result;
     while(!fileResult.atEnd()){
         QByteArray line = fileResult.readLine();
@@ -164,21 +166,21 @@ int main(int argc, char *argv[])
         }
     }
     qDebug()<<"Read file result successfully.";
-
+	*/
     //Close file
     fileCollege.close();
     fileGame.close();
     fileStudent.close();
     //fileTeam.close();
     fileSignup.close();
-    fileResult.close();
+    //fileResult.close();
 
     qDebug()<<"Size of colleges:"<<database.colleges.size();
     qDebug()<<"Size of games:"<<database.games.size();
     qDebug()<<"Size of students:"<<database.students.size();
     //qDebug()<<"Size of teams:"<<database.teams.size();
     qDebug()<<"Size of signups:"<<database.signups.size();
-    qDebug()<<"Size of results:"<<database.results.size();
+    //qDebug()<<"Size of results:"<<database.results.size();
 
 
     LoginWindow loginWin;

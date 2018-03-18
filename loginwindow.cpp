@@ -48,15 +48,15 @@ void LoginWindow::normalLogin()
             QMessageBox::about(this, tr("Tips"), tr("No game now."));
         }else {
             bool flag = false;
-            for(int i=0; i<database.colleges.size(); i ++){
+            for(int i=1; i<=database.colleges.size(); i ++){
                 //qDebug()<<database.colleges[i].name<<" == "<<college;
-                if(!college.compare(database.colleges[i].name)){
+                if(!college.compare(database.colleges[i - 1].name)){
                     flag = true;
                     position = i;
                 }
             }
             if(flag){
-                if(!code.compare(database.colleges[position].code)){
+                if(!code.compare(database.colleges[position - 1].code)){
                     //Login successfully
                     normalWin.show();
                     normalWin.college = position;

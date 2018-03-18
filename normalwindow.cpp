@@ -105,7 +105,7 @@ void NormalWindow::displaySports()
         table->setItem(i, 0, item1);
         QString configFilePath = "config.ini";
         QSettings settings(configFilePath,QSettings::IniFormat);
-        QString place = settings.value("Place/" + database.games[i].place).toString();
+        QString place = settings.value("Place/" + QString::number(database.games[i].place)).toString();
         item2->setText(place);
         item2->setTextAlignment(Qt::AlignCenter);
         table->setItem(i, 1, item2);

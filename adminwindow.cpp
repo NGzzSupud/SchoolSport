@@ -50,7 +50,7 @@ void AdminWindow::changeCurrent(){
 
     bool ok;
     for(int i=1; i<=database.games.size(); i++){
-        sportPlace[i] = database.games[i-1].place.toInt(&ok, 10);
+        sportPlace[i] = database.games[i-1].place;
         sportTime[i] = database.games[i-1].duration;
     }
     //qDebug()<<"jjj";
@@ -95,70 +95,74 @@ void AdminWindow::changeCurrent(){
         }
     }
 
+	QVector<Game> games;
+	Game game;
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 5; j++) {
+			int index = finall_placeAndSport[i][j];
+			if (index != 0) {
+				game.id = games.size() + 1;
+				game.name = database.games[index - 1].name; 
+				game.duration = database.games[index - 1].duration;
+				game.place = database.games[index - 1].place;
+				game.date = finall_beginTime[game.place][index] / 1000;
+				game.number = database.games[index - 1].number;
+				//qDebug()<< QString::number(finall_beginTime[game.place][index] % 1000);
+				game.time = QTime::QTime(8,0).addSecs(finall_beginTime[game.place][index] % 1000 * 60);
+				//qDebug() << game.time;
+				game.type = database.games[index - 1].type;
+				games.push_back(game);
+			}
+		}
+	}
+	database.games.clear();
+	for (int i = 1; i <= games.size(); i++) {
+		game.id = i;
+		game.name = games[i - 1].name;
+		game.duration = games[i - 1].duration;
+		game.date = games[i - 1].date;
+		game.number = games[i - 1].number;
+		game.place = games[i - 1].place;
+		game.time = games[i - 1].time;
+		game.type = games[i - 1].type;
+		database.games.push_back(game);
+	}
+
+	//DataProcess::saveGame();
+
+	QVector<Signup> signups;
+	Signup signup;
+	for (int i = 1; i <= database.signups.size(); i++) {
+		if (struct_people[i].sport_one != 0) {
+			signup.id = signups.size() + 1;
+			signup.student_id = i;
+			signup.game_id = struct_people[i].sport_one;
+			signup.result = 0;
+			signups.push_back(signup);
+		}
+		if (struct_people[i].sport_two != 0) {
+			signup.id = signups.size() + 1;
+			signup.student_id = i;
+			signup.game_id = struct_people[i].sport_two;
+			signup.result = 0;
+			signups.push_back(signup);
+		}
+	}
+
+	database.signups.clear();
+	for (int i = 1; i <= signups.size(); i++) {
+		signup.id = i;
+		signup.student_id = signups[i - 1].student_id;
+		signup.game_id = signups[i - 1].game_id;
+		signup.result = signups[i - 1].result;
+		database.signups.push_back(signup);
+	}
+
+	//DataProcess::saveSignup;
 
     /*
-    QFile fileZhi("Zhixuce.txt");
-
-    if(!fileZhi.open(QIODevice::ReadWrite | QIODevice::Text)) {
-           qDebug()<<"Can't open the zhixuce file!";
-    }
-    while(!fileGame.atEnd()){
-        QByteArray line = fileGame.readLine();
-        QString str(line);
-        //qDebug()<<str;
-        if(str != "\n"){
-            bool ok;
-            for(int i=0; i<5; i++){
-                for(int j=0; j<5; j++){
-
-                }
-            }
-        }
-    }
-    qDebug()<<"Read file zhixuce successfully.";
-    */
-
-
-        //int day = finall_beginTime[5] /1000;
-        //int time = finall_beginTime[5] % 1000;
-/*
-    int shunxu[20] = {0};
-    QVector<Game> games;
-    Game game;
-    for(int i=0; i<20; i++){
-        if(trueXiangmu[i] != 0){
-            int index = trueXiangmu[i];
-            game.id = index;
-            game.name = database.games[index - 1].name;
-            game.duration = database.games[index - 1].duration;
-            game.date = finall_beginTime[index] / 1000;
-            game.number = database.games[index - 1].number;
-            game.place = database.games[index -1].place;
-            game.time = finall_beginTime[index] % 1000;
-            game.type = database.games[index - 1].type;
-            games.push_back(game);
-        }
-    }
-
-    database.games.clear();
-
-    for(int i=1; i<=games.size(); i++){
-        game.id = i;
-        game.name = database.games[i - 1].name;
-        game.duration = database.games[i - 1].duration;
-        game.date = database.games[i -1].date;
-        game.number = database.games[i - 1].number;
-        game.place = database.games[i -1].place;
-        game.time = database.games[i -1].time;
-        game.type = database.games[i - 1].type;
-        database.games.push_back(game);
-    }
-
-    DataProcess::saveGame();
-
-*/
-
-    //Jump to next window
+	 *	Jump to next window
+	 */
     //QString configFilePath = "config.ini";
     //QSettings settings(configFilePath,QSettings::IniFormat);
     //settings.setValue("Game/Current", "2");
@@ -314,7 +318,7 @@ void AdminWindow::saveGame(){
     //qDebug()<<"save";
     bool flag = true;
     for(int i=0; i<table->rowCount(); i++){
-        if(table->item(i, 0)->text().compare("") == 0||table->item(i, 1)->text().compare("") == 0){
+        if(table->item(i, 0)->text().isEmpty()||table->item(i, 1)->text().isEmpty()){
             //qDebug()<<table->item(i, 0)->text();
             //qDebug()<<table->item(i, 1)->text();
             flag = false;
@@ -334,7 +338,7 @@ void AdminWindow::saveGame(){
              QString configFilePath = "config.ini";
              QSettings settings(configFilePath,QSettings::IniFormat);
              QString place = settings.value("Place/" + table->item(i, 3)->text()).toString();
-             game.place = place;
+             game.place = place.toInt(&ok, 10);
              game.number = table->item(i, 4)->text().toInt(&ok,10);
              database.games.push_back(game);
          }

@@ -1,3 +1,5 @@
+#define MAXGAME 20
+#define MAXPLAYER 20
 #include "entrywindow.h"
 #include "ui_entrywindow.h"
 #include <QDialog>
@@ -13,7 +15,8 @@
 #include "algorithm/SportArithmetic.h"
 extern DataProcess database;
 
-int gamePlayerNum[10],gamePlayer[10][10];
+int gamePlayerNum[MAXPLAYER];
+int gamePlayer[MAXGAME][MAXPLAYER];
 
 Entrywindow::Entrywindow(QWidget *parent) :
     QDialog(parent),
@@ -49,17 +52,6 @@ Entrywindow::Entrywindow(QWidget *parent) :
     connect(ui->pushButton_complete, &QPushButton::clicked, this, &Entrywindow::complete);
 
 
-    for(int i=1;i<=database.games.size();i++)
-    {
-        gamePlayerNum[i-1]=0;
-        for(int j=0;j<database.signups.size();j++){
-            if(database.signups[j].game_id==i){   //qDebug()<<"1";
-                gamePlayer[i-1][gamePlayerNum[i-1]]=database.signups[j].student_id;
-                gamePlayerNum[i-1]++;
-                //sizeof(gamePlayer[i])/sizeof(int);
-            }
-        }
-    }
 
 
 }
@@ -76,6 +68,19 @@ Entrywindow::~Entrywindow()
  */
 void Entrywindow::addLineEdit()
 {
+
+	for (int i = 1; i <= MAXGAME; i++)
+	{
+		gamePlayerNum[i] = 0;
+		for (int j = 0; j<database.signups.size(); j++) {
+			if (database.signups[j].game_id == i) {   //qDebug()<<"1";
+				gamePlayer[i][gamePlayerNum[i]] = database.signups[j].student_id;
+				gamePlayerNum[i]++;
+				//sizeof(gamePlayer[i])/sizeof(int);
+			}
+		}
+	}
+
     //this->setFixedSize(460, 100 + sizeof(gamePlayer[ui->tableWidget_game->currentRow()])/sizeof(int) * 40);
     QList<QLabel*> labels = this->findChildren<QLabel*>("label");
     QList<QLineEdit*> lines = this->findChildren<QLineEdit*>("line");
@@ -117,7 +122,7 @@ void Entrywindow::addLineEdit()
 void Entrywindow::save()
 {
     QList<QLineEdit*> lines = this->findChildren<QLineEdit*>("line");
-
+	/*
     for(int i=0; i<lines.size(); i++){
         Result result;
         result.id = database.results.size() + 1;
@@ -128,7 +133,7 @@ void Entrywindow::save()
     }
 
     DataProcess::saveResult();
-
+	*/
 }
 
 

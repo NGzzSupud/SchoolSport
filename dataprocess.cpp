@@ -40,7 +40,7 @@ void DataProcess::saveGame()
             QString str = QString::number(database.games[i].id) + "|" + database.games[i].name + "|" + QString::number(database.games[i].date)
                     + "|" + QString::number(database.games[i].duration)
                     + "|" + database.games[i].time.toString("hh:mm")
-                    + "|" + database.games[i].place
+                    + "|" + QString::number(database.games[i].place)
                     + "|" + QString::number(database.games[i].number)
                     + "|" + QString::number(database.games[i].type) + "|";
             QTextStream in(&fileGame);
@@ -94,14 +94,17 @@ void DataProcess::saveSignup()
         qDebug()<<"Can't open the signup file!";
     }else {
         for(int i=0; i < database.signups.size(); i ++){
-            QString str = QString::number(database.signups[i].id) + "|" + QString::number(database.signups[i].student_id) + "|" + QString::number(database.signups[i].game_id)+ "|";
+            QString str = QString::number(database.signups[i].id) + "|" 
+				+ QString::number(database.signups[i].student_id) + "|" 
+				+ QString::number(database.signups[i].game_id)+ "|"
+				+ QString::number(database.signups[i].result) + "|";
             QTextStream in(&fileSignup);
             in<<str<<"\n";
         }
         fileSignup.close();
     }
 }
-
+/*
 void DataProcess::saveResult()
 {
     QFile fileResult("Result.txt");
@@ -118,3 +121,4 @@ void DataProcess::saveResult()
         fileResult.close();
     }
 }
+*/

@@ -17,6 +17,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     connect(ui->pushButton_start,&QPushButton::clicked,this,&MainWindow::changeCurrent);
     connect(ui->pushButton_manage, &QPushButton::clicked, this, &MainWindow::manageCollege);
+    connect(ui->pushButton_setScore, &QPushButton::clicked, this, &MainWindow::setScore);
+
 }
 
 MainWindow::~MainWindow()
@@ -37,6 +39,99 @@ void MainWindow::changeCurrent()
     adminWin_1.show();
     this->close();
 }
+
+/*
+ *  Set the score of the game.
+ */
+void MainWindow::setScore()
+{
+    static QDialog *mainWindow = new QDialog;
+
+    static QGridLayout *gridLayout = new QGridLayout;
+
+    button_save = new QPushButton(this);
+    button_save->setText("Save");
+
+    connect(button_save, &QPushButton::clicked, this, &MainWindow::saveScore);
+
+
+    //create a table
+    table = new QTableWidget(5,2);
+    QStringList colLabels;
+    colLabels << "Rank" << "Score";
+    table->setHorizontalHeaderLabels(colLabels);
+
+    QString configFilePath = "config.ini";
+    QSettings settings(configFilePath,QSettings::IniFormat);
+    QString rankName[5] = {"Champion", "Runner-up", "Third", "Fourth", "Fifth"};
+    //Fill in data
+    for(int i = 0; i < 5; i ++){
+
+        QTableWidgetItem *item1;
+        QTableWidgetItem *item2;
+        item1 = new QTableWidgetItem;
+        item2 = new QTableWidgetItem;
+        item1->setText(rankName[i]);
+        item1->setTextAlignment(Qt::AlignCenter);
+        item1->setFlags(Qt::NoItemFlags);
+        table->setItem(i, 0, item1);
+        item2->setText(settings.value("Rank/" + rankName[i]).toString());
+        item2->setTextAlignment(Qt::AlignCenter);
+        table->setItem(i, 1, item2);
+    }
+
+
+    //Set the height of each row
+    for(int i = 0; i < database.colleges.size(); i++)
+        table->setRowHeight(i, 25);
+    table->horizontalHeader()->setStretchLastSection(true);
+    table->setSelectionBehavior(QAbstractItemView::SelectRows);
+    table->setAlternatingRowColors(true);
+
+    gridLayout->setColumnStretch(0, 0);
+    gridLayout->addWidget(table, 0, 0, 1, 3);
+    gridLayout->addWidget(button_save, 1, 2);
+
+    mainWindow->setLayout(gridLayout);
+
+    mainWindow->resize(360, 250);
+    mainWindow->setWindowTitle("Rank and Score");
+    mainWindow->setGeometry(this->geometry().x() - 360, (QApplication::desktop()->height() - mainWindow->height())/2, 360, 250);
+    mainWindow->setWindowFlags(mainWindow->windowFlags()&~Qt::WindowMaximizeButtonHint);
+    mainWindow->setWindowFlags(Qt::WindowCloseButtonHint | Qt::MSWindowsFixedSizeDialogHint);
+    mainWindow->setFixedSize(mainWindow->width(), mainWindow->height());
+    mainWindow->show();
+
+}
+
+/*
+ *  Save the score of the game.
+ */
+void MainWindow::saveScore()
+{
+    bool flag = true;
+    QString rankName[5] = {"Champion", "Runner-up", "Third", "Fourth", "Fifth"};
+
+    for(int i=0; i<5; i++){
+        if(table->item(i, 0)->text().isEmpty()||table->item(i, 1)->text().isEmpty()){
+            //qDebug()<<table->item(i, 0)->text();
+            //qDebug()<<table->item(i, 1)->text();
+            flag = false;
+            break;
+        }
+    }
+    if(flag){
+        for(int i=0; i<5; i++){
+            QString configFilePath = "config.ini";
+            QSettings settings(configFilePath,QSettings::IniFormat);
+            settings.setValue("Rank/" + rankName[i], table->item(i, 1)->text());
+        }
+
+    }else {
+        QMessageBox::about(this, tr("Tips"), tr("Input can't be empty."));
+    }
+}
+
 
 /*
  *  Display a window to show college information.
@@ -147,7 +242,7 @@ void MainWindow::saveCollege()
     //qDebug()<<"save";
     bool flag = true;
     for(int i=0; i<table->rowCount(); i++){
-        if(table->item(i, 0)->text().compare("") == 0||table->item(i, 1)->text().compare("") == 0){
+        if(table->item(i, 0)->text().isEmpty()||table->item(i, 1)->text().isEmpty()){
             //qDebug()<<table->item(i, 0)->text();
             //qDebug()<<table->item(i, 1)->text();
             flag = false;

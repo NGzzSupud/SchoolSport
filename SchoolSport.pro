@@ -44,7 +44,8 @@ SOURCES += \
     algorithm/fuck.cpp \
     algorithm/SportArithmetic.cpp \
     algorithm/sportThing.cpp \
-    algorithm/TEXTMain.cpp
+    algorithm/TEXTMain.cpp \
+    querywindow.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -65,11 +66,13 @@ HEADERS += \
     algorithm/fuck.h \
     algorithm/SportArithmetic.h \
     algorithm/sportThing.h \
-    algorithm/Top.h
+    algorithm/Top.h \
+    querywindow.h
 
 FORMS += \
         mainwindow.ui \
     loginwindow.ui \
     adminwindow.ui \
     normalwindow.ui \
-    entrywindow.ui
+    entrywindow.ui \
+    querywindow.ui

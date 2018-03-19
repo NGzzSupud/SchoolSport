@@ -7,6 +7,7 @@
 #include "mainwindow.h"
 #include "adminwindow.h"
 #include "entrywindow.h"
+#include "querywindow.h"
 
 namespace Ui {
 class LoginWindowUi;
@@ -31,6 +32,7 @@ private:
     MainWindow beginWin;
     AdminWindow adminWin_1;
     Entrywindow adminWin_2;
+    QueryWindow queryWin;
   //SignupWindow adminWin_2;
     int Current;
 };

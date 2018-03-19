@@ -42,11 +42,11 @@ int main(int argc, char *argv[])
     if(!fileSignup.open(QIODevice::ReadOnly | QIODevice::Text)) {
            qDebug()<<"Can't open the singup file!";
     }
-	/*
+	
     if(!fileResult.open(QIODevice::ReadOnly | QIODevice::Text)) {
            qDebug()<<"Can't open the result file!";
     }
-	*/
+	
     College college;
     while(!fileCollege.atEnd()){
         QByteArray line = fileCollege.readLine();
@@ -151,17 +151,18 @@ int main(int argc, char *argv[])
     DataProcess::saveStudent();
     qDebug()<<"Read file signup successfully.";
 	
-    Result result;
 	while (!fileResult.atEnd()) {
 		QByteArray line = fileResult.readLine();
 		QString str(line);
 		//qDebug()<<str;
 		if (str != "\n") {
 			bool ok;
+			Result result;
 			result.id = str.section("|", 0, 0).toInt(&ok, 10);
-			result.number = str.section("|", 1, 1).toInt(&ok, 10);
+			result.game_id = str.section("|", 1, 1).toInt(&ok, 10);
+			result.number = str.section("|", 2, 2).toInt(&ok, 10);
 			for (int i = 0; i<result.number; i++) {
-				result.students.push_back(str.section("|", i + 2, i + 2).toInt(&ok, 10));
+				result.students.push_back(str.section("|", i + 3, i + 3).toInt(&ok, 10));
 			}
 			database.results.push_back(result);
 		}

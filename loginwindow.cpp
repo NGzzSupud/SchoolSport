@@ -58,9 +58,14 @@ void LoginWindow::normalLogin()
             if(flag){
                 if(!code.compare(database.colleges[position - 1].code)){
                     //Login successfully
-                    normalWin.show();
-                    normalWin.college = position;
-                    this->close();
+                    if(Current < 2){
+                        normalWin.show();
+                        normalWin.college = position;
+                        this->close();
+                    }else {
+                        queryWin.show();
+                        this->close();
+                    }
                 }else{
                     //Wrong code
                     QMessageBox::about(this, tr("Tips"), tr("The code is wrong."));
@@ -111,6 +116,9 @@ void LoginWindow::jumpWindow(int flag){
         break;
     case 2:
         adminWin_2.show();
+        break;
+    case 3:
+        queryWin.show();
         break;
     default:
         break;

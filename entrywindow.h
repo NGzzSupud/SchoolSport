@@ -7,6 +7,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include "dataprocess.h"
+#include "querywindow.h"
 
 namespace Ui {
 class Entrywindow;
@@ -29,6 +30,7 @@ private:
     Ui::Entrywindow *ui;
     QTableWidget *table;
     QGridLayout *grid;
+    QueryWindow queryWin;
 };
 
 #endif // ENTRYWINDOW_H

@@ -228,14 +228,24 @@ void Entrywindow::addLineEdit()
 }
 
 /*
- *  Submit and save the result.
+ *  Save the result and calculate the score.
  */
 void Entrywindow::submit()
 {
     QList<QLineEdit*> lines = this->findChildren<QLineEdit*>("line");
 
+	SortPlace results[MAXPLAYER];
+
+	QString configFilePath = "config.ini";
+	QSettings settings(configFilePath, QSettings::IniFormat);
+	QString rankName[5] = { "Champion", "Runner-up", "Third", "Fourth", "Fifth" };
+	int score[5];
+	for (int i = 0; i < 5; i++) {
+		score[i] = settings.value("Rank/" + rankName[i]).toInt();
+	}
+
 	bool flag = true;
-	for each (QLineEdit *line in lines){
+    foreach (QLineEdit *line , lines){
 		if (line->text().isEmpty()) {
 			flag = false;
 		}
@@ -248,12 +258,55 @@ void Entrywindow::submit()
 			for (int j = 0; j<database.signups.size(); j++) {
 				if (database.signups[j].student_id == id && database.signups[j].game_id == database.games[table->currentRow()].id) {
 					database.signups[j].result = result;
+					results[i].studentID = id;
+					results[i].score = result;
 					scorePlayer[table->currentRow() + 1][i] = result;
 				}
 			}
 		}
 
+		Calculate cal;
+		if (database.games[table->currentRow()].type == 1) {
+			cal.toSmall(results, gamePlayerNum[table->currentRow() + 1]);
+		}
+		else {
+			cal.toBig(results, gamePlayerNum[table->currentRow() + 1]);
+		}
+
+		int index;
+		if (DataProcess::resultIsExist(database.games[table->currentRow()].id) != -1) {
+
+			QMessageBox::about(this, tr("Tips"), tr("This game already had a result."));
+			/*
+			index = DataProcess::resultIsExist(database.games[table->currentRow()].id);
+			database.results[index - 1].number;
+			database.results[index - 1].students.clear;
+			for (int i = 0; i < database.results[index - 1].number; i++) {
+				database.results[index - 1].students.push_back(results[i].studentID);
+			}
+			*/
+		}
+		else
+		{
+			index = database.results.size() + 1;
+			Result result;
+			result.id = index;
+			result.game_id = database.games[table->currentRow()].id;
+			result.number = gamePlayerNum[table->currentRow() + 1];
+			for (int i = 0; i < result.number; i++) {
+				result.students.push_back(results[i].studentID);
+			}
+			database.results.push_back(result);
+
+			for (int j = 0; j < 5; j++) {
+				database.students[results[j].studentID - 1].score += score[j];
+			}
+
+		}
+
 		//DataProcess::saveSignup();
+		//DataProcess::saveResult();
+		//DataProcess::saveStudent();
 
 	}
 	else
@@ -264,46 +317,9 @@ void Entrywindow::submit()
 
 
 /*
- *  Complete the game and calculate the result.
+ *  Complete the game.
  */
 void Entrywindow::complete()
 {
-	SortPlace result[MAXPLAYER];
-
-	QString configFilePath = "config.ini";
-	QSettings settings(configFilePath, QSettings::IniFormat);
-	QString rankName[5] = { "Champion", "Runner-up", "Third", "Fourth", "Fifth" };
-	int score[5];
-	for (int i = 0; i < 5; i++) {
-		score[i] = settings.value("Rank/" + rankName[i]).toInt();
-	}
-
-	for (int i = 0; i < database.games.size(); i++) {
-		for (int j = 0; j < gamePlayerNum[i + 1]; j++) {
-			result[j].studentID = gamePlayer[i + 1][j];
-			result[j].score = scorePlayer[i + 1][j];
-		}
-		Calculate cal;
-		if (database.games[i].type == 1) {
-			cal.toSmall(result, gamePlayerNum[i + 1]);
-		}
-		else {
-			cal.toBig(result, gamePlayerNum[i + 1]);
-		}
-		Result res;
-		res.id = database.results.size() + 1;
-		res.game_id = database.games[i].id;
-		res.number = gamePlayerNum[i + 1];
-		for (int j = 0; j < gamePlayerNum[i + 1]; j++) {
-			res.students.push_back(result[j].studentID);
-		}
-		database.results.push_back(res);
-
-		for (int j = 0; j < 5; j++) {
-			database.students[result[j].studentID - 1].score += score[j];
-		}
-	}
-
-	DataProcess::saveResult();
-	DataProcess::saveStudent();
+    queryWin.show();
 }

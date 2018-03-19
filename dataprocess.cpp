@@ -15,6 +15,26 @@ int DataProcess::studentIsExist(QString name)
     return -1;
 }
 
+int DataProcess::resultIsExist(int game_id)
+{
+	for (int a = 0; a<database.results.size(); a++) {
+		if (database.results[a].game_id == game_id) {
+			return a + 1;
+		}
+	}
+	return -1;
+}
+
+double DataProcess::getResult(int student_id, int game_id)
+{
+    for(int i=0; i<database.signups.size(); i++){
+        if(database.signups[i].student_id == student_id && database.signups[i].game_id == game_id){
+            return i + 1;
+        }
+    }
+    return -1;
+}
+
 void DataProcess::saveCollege()
 {
     QFile fileCollege("College.txt");
@@ -115,6 +135,7 @@ void DataProcess::saveResult()
 	else {
 		for (int i = 0; i < database.results.size(); i++) {
 			QString str = QString::number(database.results[i].id) + "|"
+				+ QString::number(database.results[i].game_id) + "|"
 				+ QString::number(database.results[i].number) + "|";
 			for (int j = 0; j<database.results[i].number; j++) {
 				str.append(QString::number(database.results[i].students[j]) + "|");

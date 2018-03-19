@@ -48,7 +48,6 @@ AdminWindow::~AdminWindow()
 
 void AdminWindow::changeCurrent(){
 
-    bool ok;
     for(int i=1; i<=database.games.size(); i++){
         sportPlace[i] = database.games[i-1].place;
         sportTime[i] = database.games[i-1].duration;
@@ -101,7 +100,7 @@ void AdminWindow::changeCurrent(){
 		for (int j = 0; j < 5; j++) {
 			int index = finall_placeAndSport[i][j];
 			if (index != 0) {
-				game.id = games.size() + 1;
+				game.id = database.games[index - 1].id;
 				game.name = database.games[index - 1].name; 
 				game.duration = database.games[index - 1].duration;
 				game.place = database.games[index - 1].place;
@@ -117,7 +116,7 @@ void AdminWindow::changeCurrent(){
 	}
 	database.games.clear();
 	for (int i = 1; i <= games.size(); i++) {
-		game.id = i;
+		game.id = games[i - 1].id;
 		game.name = games[i - 1].name;
 		game.duration = games[i - 1].duration;
 		game.date = games[i - 1].date;

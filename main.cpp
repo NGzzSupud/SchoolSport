@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
     QFile fileStudent("Student.txt");
     //QFile fileTeam("Team.txt");
     QFile fileSignup("Signup.txt");
-    //QFile fileResult("Result.txt");
+    QFile fileResult("Result.txt");
     if(!fileCollege.open(QIODevice::ReadOnly | QIODevice::Text)) {
            qDebug()<<"Can't open the college file!";
     }
@@ -95,6 +95,7 @@ int main(int argc, char *argv[])
             student.college_id = str.section("|", 2, 2).toInt(&ok, 10);
             student.gameCount_f = str.section("|", 3, 3).toInt(&ok, 10);
             student.gameCount_t = str.section("|", 4, 4).toInt(&ok, 10);
+			student.score = str.section("|", 5, 5).toInt(&ok, 10);
             //student.haveTeam = str.section("|", 5, 5).toInt(&ok, 10);
             database.students.push_back(student);
         }
@@ -149,38 +150,38 @@ int main(int argc, char *argv[])
     }
     DataProcess::saveStudent();
     qDebug()<<"Read file signup successfully.";
-	/*
+	
     Result result;
-    while(!fileResult.atEnd()){
-        QByteArray line = fileResult.readLine();
-        QString str(line);
-        //qDebug()<<str;
-        if(str != "\n"){
-            bool ok;
-            result.id = str.section("|", 0, 0).toInt(&ok, 10);
-            result.game_id = str.section("|", 1, 1).toInt(&ok, 10);
-            result.student_id = str.section("|", 2, 2).toInt(&ok, 10);
-            result.result = str.section("|", 3, 3);
-
-            database.results.push_back(result);
-        }
-    }
+	while (!fileResult.atEnd()) {
+		QByteArray line = fileResult.readLine();
+		QString str(line);
+		//qDebug()<<str;
+		if (str != "\n") {
+			bool ok;
+			result.id = str.section("|", 0, 0).toInt(&ok, 10);
+			result.number = str.section("|", 1, 1).toInt(&ok, 10);
+			for (int i = 0; i<result.number; i++) {
+				result.students.push_back(str.section("|", i + 2, i + 2).toInt(&ok, 10));
+			}
+			database.results.push_back(result);
+		}
+	}
     qDebug()<<"Read file result successfully.";
-	*/
+	
     //Close file
     fileCollege.close();
     fileGame.close();
     fileStudent.close();
     //fileTeam.close();
     fileSignup.close();
-    //fileResult.close();
+    fileResult.close();
 
     qDebug()<<"Size of colleges:"<<database.colleges.size();
     qDebug()<<"Size of games:"<<database.games.size();
     qDebug()<<"Size of students:"<<database.students.size();
     //qDebug()<<"Size of teams:"<<database.teams.size();
     qDebug()<<"Size of signups:"<<database.signups.size();
-    //qDebug()<<"Size of results:"<<database.results.size();
+    qDebug()<<"Size of results:"<<database.results.size();
 
 
     LoginWindow loginWin;

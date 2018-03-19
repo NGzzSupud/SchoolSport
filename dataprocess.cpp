@@ -59,7 +59,8 @@ void DataProcess::saveStudent()
         for(int i=0; i < database.students.size(); i ++){
             QString str = QString::number(database.students[i].id) + "|" + database.students[i].name + "|" + QString::number(database.students[i].college_id)+ "|"
                     + QString::number(database.students[i].gameCount_f) + "|"
-                    + QString::number(database.students[i].gameCount_t) + "|";
+                    + QString::number(database.students[i].gameCount_t) + "|"
+					+ QString::number(database.students[i].score) + "|";
                     //+ QString::number(database.students[i].haveTeam) + "|";
             QTextStream in(&fileStudent);
             in<<str<<"\n";
@@ -104,21 +105,23 @@ void DataProcess::saveSignup()
         fileSignup.close();
     }
 }
-/*
+
 void DataProcess::saveResult()
 {
-    QFile fileResult("Result.txt");
-    if(!fileResult.open(QIODevice::ReadWrite | QIODevice::Text | QIODevice::Truncate)) {
-        qDebug()<<"Can't open the result file!";
-    }else {
-        for(int i=0; i < database.results.size(); i ++){
-            QString str = QString::number(database.results[i].id) + "|" + QString::number(database.results[i].student_id) + "|"
-                    + QString::number(database.results[i].game_id)+ "|"
-                    + database.results[i].result+ "|";
-            QTextStream in(&fileResult);
-            in<<str<<"\n";
-        }
-        fileResult.close();
-    }
+	QFile fileResult("Result.txt");
+	if (!fileResult.open(QIODevice::ReadWrite | QIODevice::Text | QIODevice::Truncate)) {
+		qDebug() << "Can't open the result file!";
+	}
+	else {
+		for (int i = 0; i < database.results.size(); i++) {
+			QString str = QString::number(database.results[i].id) + "|"
+				+ QString::number(database.results[i].number) + "|";
+			for (int j = 0; j<database.results[i].number; j++) {
+				str.append(QString::number(database.results[i].students[j]) + "|");
+			}
+			QTextStream in(&fileResult);
+			in << str << "\n";
+		}
+		fileResult.close();
+	}
 }
-*/

@@ -10,6 +10,7 @@
 #include <QMessageBox>
 #include <QDesktopWidget>
 #include <QFile>
+#include <QSettings>
 #include <QDebug>
 #include "dataprocess.h"
 #include "algorithm/SportArithmetic.h"
@@ -17,6 +18,7 @@ extern DataProcess database;
 
 int gamePlayerNum[MAXPLAYER];
 int gamePlayer[MAXGAME][MAXPLAYER];
+int scorePlayer[MAXGAME][MAXPLAYER];
 
 Entrywindow::Entrywindow(QWidget *parent) :
     QDialog(parent),
@@ -133,6 +135,22 @@ void Entrywindow::displayGames(){
     mainWindow->show();
 
     connect(table, &QTableWidget::clicked, this, &Entrywindow::addLineEdit);
+
+
+
+	for (int i = 1; i <= database.games.size(); i++)
+	{
+		gamePlayerNum[i] = 0;
+		for (int j = 0; j<database.signups.size(); j++) {
+			if (database.signups[j].game_id == database.games[i - 1].id) {   //qDebug()<<"1";
+				gamePlayer[i][gamePlayerNum[i]] = database.signups[j].student_id;
+				scorePlayer[i][gamePlayerNum[i]] = database.signups[j].result;
+				gamePlayerNum[i]++;
+				//sizeof(gamePlayer[i])/sizeof(int);
+			}
+		}
+	}
+
 }
 
 /*
@@ -141,19 +159,7 @@ void Entrywindow::displayGames(){
 void Entrywindow::addLineEdit()
 {
 
-	for (int i = 1; i <= MAXGAME; i++)
-	{
-		gamePlayerNum[i] = 0;
-		for (int j = 0; j<database.signups.size(); j++) {
-			if (database.signups[j].game_id == i) {   //qDebug()<<"1";
-				gamePlayer[i][gamePlayerNum[i]] = database.signups[j].student_id;
-				gamePlayerNum[i]++;
-				//sizeof(gamePlayer[i])/sizeof(int);
-			}
-		}
-	}
-
-    this->setFixedSize(460, 100 + gamePlayerNum[table->currentRow()] * 40);
+    this->setFixedSize(460, 100 + gamePlayerNum[table->currentRow() + 1] * 40);
     QList<QLabel*> labels = this->findChildren<QLabel*>("label");
     QList<QLineEdit*> lines = this->findChildren<QLineEdit*>("line");
     QList<QPushButton*> buttons = this->findChildren<QPushButton*>("button");
@@ -178,10 +184,10 @@ void Entrywindow::addLineEdit()
     }
 
     //ui->label_game->setText(database.games[table->currentRow()].name);
-    for(int i=0; i<gamePlayerNum[table->currentRow()]; i++){
-        //qDebug()<<"changed";
+    for(int i=0; i<gamePlayerNum[table->currentRow() + 1]; i++){
+        qDebug()<<i<<"changed";
         QLabel * label_name = new QLabel(this);
-        label_name->setText(database.students[gamePlayer[table->currentRow()][i] - 1].name);
+        label_name->setText(database.students[gamePlayer[table->currentRow() + 1][i] - 1].name);
         label_name->setAlignment(Qt::AlignCenter);
         label_name->setObjectName("label");
         QLineEdit * lineEdit = new QLineEdit(this);
@@ -213,10 +219,9 @@ void Entrywindow::addLineEdit()
     pushButton_complete->setObjectName("button");
     grid->addWidget(label_select, 0, 1);
     grid->addWidget(label_gameName, 0, 2);
-    grid->addWidget(pushButton_timer, gamePlayerNum[table->currentRow()]+1, 1);
-    grid->addWidget(pushButton_submit, gamePlayerNum[table->currentRow()]+1, 2);
-    grid->addWidget(pushButton_complete,gamePlayerNum[table->currentRow()]+1,3);
-
+    grid->addWidget(pushButton_timer, gamePlayerNum[table->currentRow() + 1] + 1, 1);
+    grid->addWidget(pushButton_submit, gamePlayerNum[table->currentRow() + 1] + 1, 2);
+    grid->addWidget(pushButton_complete,gamePlayerNum[table->currentRow() + 1] + 1,3);
     connect(pushButton_timer,&QPushButton::clicked,this,&Entrywindow::displayGames);
     connect(pushButton_submit,&QPushButton::clicked,this,&Entrywindow::submit);
     connect(pushButton_complete,&QPushButton::clicked,this,&Entrywindow::complete);
@@ -227,19 +232,34 @@ void Entrywindow::addLineEdit()
  */
 void Entrywindow::submit()
 {
-    //QList<QLineEdit*> lines = this->findChildren<QLineEdit*>("line");
-	/*
-    for(int i=0; i<lines.size(); i++){
-        Result result;
-        result.id = database.results.size() + 1;
-        result.game_id = ui->tableWidget_game->currentRow() + 1;
-        result.student_id = gamePlayer[ui->tableWidget_game->currentRow()][i];
-        result.result = lines[i]->text();
-        database.results.push_back(result);
-    }
+    QList<QLineEdit*> lines = this->findChildren<QLineEdit*>("line");
 
-    DataProcess::saveResult();
-	*/
+	bool flag = true;
+	for each (QLineEdit *line in lines){
+		if (line->text().isEmpty()) {
+			flag = false;
+		}
+	}
+	if (flag) {
+
+		for (int i = 0; i<lines.size(); i++) {
+			double result = lines[i]->text().toDouble();
+			int id = gamePlayer[table->currentRow() + 1][i];
+			for (int j = 0; j<database.signups.size(); j++) {
+				if (database.signups[j].student_id == id && database.signups[j].game_id == database.games[table->currentRow()].id) {
+					database.signups[j].result = result;
+					scorePlayer[table->currentRow() + 1][i] = result;
+				}
+			}
+		}
+
+		//DataProcess::saveSignup();
+
+	}
+	else
+	{
+		QMessageBox::about(this, tr("Tips"), tr("Input can't be empty."));
+	}
 }
 
 
@@ -248,5 +268,42 @@ void Entrywindow::submit()
  */
 void Entrywindow::complete()
 {
+	SortPlace result[MAXPLAYER];
 
+	QString configFilePath = "config.ini";
+	QSettings settings(configFilePath, QSettings::IniFormat);
+	QString rankName[5] = { "Champion", "Runner-up", "Third", "Fourth", "Fifth" };
+	int score[5];
+	for (int i = 0; i < 5; i++) {
+		score[i] = settings.value("Rank/" + rankName[i]).toInt();
+	}
+
+	for (int i = 0; i < database.games.size(); i++) {
+		for (int j = 0; j < gamePlayerNum[i + 1]; j++) {
+			result[j].studentID = gamePlayer[i + 1][j];
+			result[j].score = scorePlayer[i + 1][j];
+		}
+		Calculate cal;
+		if (database.games[i].type == 1) {
+			cal.toSmall(result, gamePlayerNum[i + 1]);
+		}
+		else {
+			cal.toBig(result, gamePlayerNum[i + 1]);
+		}
+		Result res;
+		res.id = database.results.size() + 1;
+		res.game_id = database.games[i].id;
+		res.number = gamePlayerNum[i + 1];
+		for (int j = 0; j < gamePlayerNum[i + 1]; j++) {
+			res.students.push_back(result[j].studentID);
+		}
+		database.results.push_back(res);
+
+		for (int j = 0; j < 5; j++) {
+			database.students[result[j].studentID - 1].score += score[j];
+		}
+	}
+
+	DataProcess::saveResult();
+	DataProcess::saveStudent();
 }

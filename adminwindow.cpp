@@ -158,6 +158,7 @@ void AdminWindow::changeCurrent(){
 	}
 
 	//DataProcess::saveSignup;
+    makeOrderFile();
 
     /*
 	 *	Jump to next window
@@ -167,6 +168,40 @@ void AdminWindow::changeCurrent(){
     //settings.setValue("Game/Current", "2");
     adminWin_2.show();
     //this->close();
+}
+
+void AdminWindow::makeOrderFile(){
+    QFile fileOrder("Order.txt");
+
+    if(!fileOrder.open(QIODevice::WriteOnly | QIODevice::Text)) {
+
+    }
+    QString configFilePath = "config.ini";
+    QSettings settings(configFilePath,QSettings::IniFormat);
+    QDate startDate = QDate::fromString(settings.value("Game/Date").toString(), "yyyy-MM-dd");
+
+    //qDebug()<<settings.value("Game/Date").toString()<<startDate;
+    for(int i=0; i<database.games.size(); i++){
+
+        QString str;
+
+        str = database.games[i].name + "      " + settings.value("Place/" + QString::number(database.games[i].place)).toString() +  "\n";
+        str = str + startDate.addDays(database.games[i].date).toString("yyyy-MM-dd")+ "    "
+                + database.games[i].time.toString("hh:mm")
+                + "-" + database.games[i].time.addSecs(database.games[i].duration * 60).toString("hh:mm") + "\n";
+        QVector<int> students = DataProcess::getStudentByGame(database.games[i].id);
+        for(int j=0; j<students.size(); j++){
+            str = str + database.students[students[j] - 1].name + "  |  ";
+            if(j != 0 && j%4 == 0){
+                str = str + "\n";
+            }
+        }
+        str = str + "\n\n\n";
+        QTextStream in(&fileOrder);
+        in<<str;
+    }
+
+    fileOrder.close();
 }
 
 void AdminWindow::releaseGame(){

@@ -33,6 +33,7 @@ private:
     QPushButton *button_delete;
     QPushButton *button_save;
     Entrywindow adminWin_2;
+    void makeOrderFile();
 };
 
 #endif // ADMINWINDOW_H

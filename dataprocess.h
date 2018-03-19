@@ -79,6 +79,7 @@ public:
     static int studentIsExist(QString name);
 	static int resultIsExist(int game_id);
     static double getResult(int student_id, int game_id);
+    static QVector<int> getStudentByGame(int game_id);
 
 private:
 

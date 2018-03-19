@@ -35,6 +35,19 @@ double DataProcess::getResult(int student_id, int game_id)
     return -1;
 }
 
+QVector<int> DataProcess::getStudentByGame(int game_id)
+{
+    QVector<int>students;
+
+    for(int i=0; i<database.signups.size(); i++){
+        if(database.signups[i].game_id == game_id){
+            students.push_back(database.signups[i].student_id);
+        }
+    }
+
+    return students;
+}
+
 void DataProcess::saveCollege()
 {
     QFile fileCollege("College.txt");
